@@ -1,7 +1,13 @@
 .auth-layout-container {
-    height: calc(100vh - 48px);
+    min-height: calc(100vh - 48px);
+    padding-bottom: 48px;
 }
 
+/*
+    needs to be defined extra, beacause there is no easy way to change to class 
+    jquery validation applies when an input is invalid
+    so we apply the styles of the default daisyui input-error class
+*/
 .input-validation-error {
     --tw-border-opacity: 1;
     border-color: hsl(var(--er) / var(--tw-border-opacity));
@@ -9,4 +15,11 @@
 
 .input-validation-error:focus {
     outline: 2px solid hsl(var(--er));
+}
+
+/*
+    set the sibling label color to red when the checkbox input is invalid
+*/
+.input-validation-error ~ .label-text {
+    color: hsl(var(--er)) !important;
 }

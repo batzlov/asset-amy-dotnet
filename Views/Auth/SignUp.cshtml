@@ -63,13 +63,10 @@
                     </label>
                 </div>
 
-                <div class="form-control pt-2">
+                <div class="form-control pt-3 items-start">
                     <label class="label cursor-pointer max-w-xl">
-                        <input type="checkbox" class="checkbox" asp-for="PrivacyPolicyAccepted" value="false" />
+                        <input type="checkbox" class="checkbox" asp-for="PrivacyPolicyAccepted" data-val="false" data-rule-required="true" />
                         <span class="label-text pl-2">Ich habe die Datenschutzerklärung gelesen und bin damit einverstanden.</span> 
-                        <label class="label">
-                            <span asp-validation-for="PrivacyPolicyAccepted" class="label-text-alt text-error"></span>
-                        </label>
                     </label>
                 </div>
 
