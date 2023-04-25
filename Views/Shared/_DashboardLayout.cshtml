@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Asset Amy</title>
+    <link rel="stylesheet" href="~/lib/daisyui/full.css" />
+    <link rel="stylesheet" href="~/css/app.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/asset_amy.styles.css" asp-append-version="true" />
+    <link rel="apple-touch-icon" sizes="180x180" href="~/assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="~/assets/favicon/site.webmanifest">
+</head>
+<body>
+    <header>
+        <div class="navbar bg-primary text-primary-content">
+            <div class="navbar-start">
+                <div class="dropdown">
+                    <label tabindex="0" class="btn btn-ghost lg:hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h8m-8 6h16" />
+                        </svg>
+                    </label>
+                    <ul class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-primary rounded-box w-52">
+                        <li>
+                            <a
+                                asp-controller="Home" asp-action="Index"
+                            >Home</a>
+                        </li>
+                        <li>
+                            <a>Dashboard</a>
+                        </li>
+                    </ul>
+                </div>
+                <a class="btn btn-ghost normal-case text-xl">Asset Amy</a>
+            </div>
+            <div class="navbar-end hidden lg:flex">
+                <ul class="menu menu-horizontal px-1">
+                    <li>
+                        <a
+                            asp-controller="Auth" asp-action="Index"
+                        >Home</a>
+                    </li>
+                    <li>
+                        <a>Dashboard</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main role="main" class="dashboard-layout-container grid grid-cols-1 lg:grid-cols-10">
+        <div class="hidden col-span-0 lg:block lg:col-span-2">
+            <ul class="menu h-screen min-w-42 p-3 border bg-base-100">
+                <li class="menu-title">
+                    <span>
+                        Dashboard
+                    </span>
+                </li> 
+                <li
+                    class="bg-primary rounded-box text-primary-content"
+                >
+                    <a>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 mr-2 stroke-current">        
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path> 
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>                 
+                        </svg>
+                        Übersicht
+                    </a>
+                </li> 
+                <li>
+                    <a>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 mr-2 stroke-current">       
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>                   
+                        </svg>
+                        Einnahmen
+                    </a>
+                </li> 
+                <li>
+                    <a>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 mr-2 stroke-current">          
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>                
+                        </svg>
+                        Ausgaben
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 mr-2 stroke-current">          
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>                
+                        </svg>
+                        Asset Allocation
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-span-10 lg:col-span-8 bg-base-200">
+            @RenderBody()
+        </div>
+    </main>
+
+    <script src="~/lib/tailwind/full.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/app.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

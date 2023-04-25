@@ -3,6 +3,11 @@
     padding-bottom: 48px;
 }
 
+.dashboard-layout-container {
+    height: calc(100vh - 64px);
+    overflow: hidden;
+}
+
 /*
     needs to be defined extra, beacause there is no easy way to change to class 
     jquery validation applies when an input is invalid
