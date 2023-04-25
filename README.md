@@ -66,11 +66,21 @@ Installieren der Paketabhängigkeiten für .net. Als Connector wird MySql genutz
 Erstellen des DbContext und der Model-Dateien. Parameter müss hier je nach Datenbank-Konfiguration abgeändert werden.
 
 ```
-dotnet ef dbcontext scaffold "Server=localhost;Port=8889;Database=asset-amy-dotnet;User Id=root;Password=root" Pomelo.EntityFrameworkCore.MySql --context-dir DbContext --context AssetAmyContext --output-dir Models
+    dotnet ef dbcontext scaffold "Server=<host>;Port=<port>;Database=<db-name>;User Id=<db-user>;Password=<db-user-password>"
+    Pomelo.EntityFrameworkCore.MySql --context-dir DbContext
+    --context AssetAmyContext --output-dir Models
+```
+
+```
+    dotnet ef dbcontext scaffold "Server=localhost;Port=8889;Database=asset-amy-dotnet;User Id=root;Password=root"
+    Pomelo.EntityFrameworkCore.MySql --context-dir DbContext
+    --context AssetAmyContext --output-dir Models
 ```
 
 Erstellen der Models unter Ausschluss der Migration-Tabelle
 
 ```
-dotnet ef dbcontext scaffold "Server=localhost;Port=8889;Database=asset-amy-dotnet;User Id=root;Password=root" Pomelo.EntityFrameworkCore.MySql --context-dir DbContext --context AssetAmyContext --output-dir Models --force --table User --table Asset --table Expense --table Revenue
+    dotnet ef dbcontext scaffold "Server=localhost;Port=8889;Database=asset-amy-dotnet;User Id=root;Password=root"
+    Pomelo.EntityFrameworkCore.MySql --context-dir DbContext --context AssetAmyContext
+    --output-dir Models --force --table User --table Asset --table Expense --table Revenue
 ```
