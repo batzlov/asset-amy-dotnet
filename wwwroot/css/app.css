@@ -1,3 +1,12 @@
 .auth-layout-container {
     height: calc(100vh - 48px);
 }
+
+.input-validation-error {
+    --tw-border-opacity: 1;
+    border-color: hsl(var(--er) / var(--tw-border-opacity));
+}
+
+.input-validation-error:focus {
+    outline: 2px solid hsl(var(--er));
+}
