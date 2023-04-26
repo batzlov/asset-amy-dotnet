@@ -13,12 +13,15 @@ public class AuthController : Controller
         _logger = logger;
     }
 
+    [HttpGet]
+    [Route("sign-up")]
     public IActionResult SignUp()
     {
         return View(new SignUpForm());
     }
 
     [HttpPost]
+    [Route("sign-up")]
     public IActionResult SignUp(SignUpForm model)
     {
         if (ModelState.IsValid)
@@ -32,6 +35,7 @@ public class AuthController : Controller
         }
     }
 
+    [Route("sign-in")]
     public IActionResult SignIn()
     {
         return View();

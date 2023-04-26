@@ -13,7 +13,26 @@ public class DashboardController : Controller
         _logger = logger;
     }
 
+    [Route("dashboard")]
     public IActionResult Index()
+    {
+        return View();
+    }
+
+    [Route("dashboard/expenses")]
+    public IActionResult Expenses()
+    {
+        return View();
+    }
+
+    [Route("dashboard/revenues")]
+    public IActionResult Revenues()
+    {
+        return View();
+    }
+
+    [Route("dashboard/asset-allocation")]
+    public IActionResult AssetAllocation()
     {
         return View();
     }
