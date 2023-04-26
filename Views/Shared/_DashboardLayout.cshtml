@@ -82,7 +82,7 @@
     </header>
 
     <main role="main" class="dashboard-layout-container grid grid-cols-1 lg:grid-cols-10">
-        <div class="hidden col-span-0 lg:block lg:col-span-2">
+        <div class="sidebar hidden col-span-0 lg:block lg:col-span-2">
             <ul class="menu h-screen min-w-42 p-3 border bg-base-100">
                 <li class="menu-title">
                     <span>
@@ -129,11 +129,13 @@
                 }
             </ul>
         </div>
-        <div class="col-span-10 lg:col-span-8 bg-base-200">
+        <div class="dashboard-content col-span-10 lg:col-span-8 bg-base-200">
             @RenderBody()
         </div>
     </main>
 
+    @* <script src="~/lib/chartjs/index.js"></script> *@
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script src="~/lib/tailwind/full.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/app.js" asp-append-version="true"></script>

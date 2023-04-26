@@ -2,3 +2,232 @@
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
     ViewData["Title"] = "Dashboard";
 }
+
+<div class="pt-6 px-6">
+    <div class="grid grid-cols-1">
+        <div class="text-right">
+            <button class="btn btn-ghost btn-sm normal-case">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="w-4 mr-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"></path>
+                </svg>
+                Aktuallisieren
+            </button>
+            <button class="btn btn-ghost btn-sm normal-case  ml-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="w-4 mr-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"></path>
+                </svg>
+                Share
+            </button>
+            <div class="dropdown dropdown-bottom dropdown-end  ml-2">
+                <label tabindex="0" class="btn btn-ghost btn-sm normal-case btn-square ">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="w-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"></path>
+                    </svg>
+                </label>
+                <ul tabindex="0" class="dropdown-content menu menu-compact  p-2 shadow bg-base-100 rounded-box w-52">
+                    <li>
+                        <a>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="w-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"></path>
+                            </svg>
+                            Download
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid xl:grid-cols-3 mt-8 md:grid-cols-2 grid-cols-1 gap-6">
+        <div class="stats shadow">
+            <div class="stat">
+                <div class="stat-figure text-primary">
+                    @Html.Partial("~/Views/Shared/Icons/BankNotes.cshtml")
+                </div>
+                <div class="stat-title">Einnahmen</div>
+                <div class="stat-value text-primary">935,50</div>
+                <div class="stat-desc">Einnahmen in €</div>
+            </div>
+        </div>
+        <div class="stats shadow">
+            <div class="stat">
+                <div class="stat-figure text-primary">
+                    @Html.Partial("~/Views/Shared/Icons/CreditCard.cshtml")
+                </div>
+                <div class="stat-title">Ausgaben</div>
+                <div class="stat-value text-primary">900,00</div>
+                <div class="stat-desc">Ausgaben in €</div>
+            </div>
+        </div>
+        <div class="stats shadow">
+            <div class="stat">
+                <div class="stat-figure text-primary">
+                    @Html.Partial("~/Views/Shared/Icons/ChartPie.cshtml")
+                </div>
+                <div class="stat-title">Asset Allocation</div>
+                <div class="stat-value text-primary">15.631,00</div>
+                <div class="stat-desc">Portfoliowert in €</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 pt-6 gap-6">
+        <div>
+            <div class="card bg-base-100 shadow-xl">
+                <div class="card-body">
+                    <canvas id="revenues-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="card bg-base-100 shadow-xl">
+                <div class="card-body">
+                    <canvas id="expenses-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="card bg-base-100 shadow-xl">
+                <div class="card-body">
+                    <canvas id="asset-allocation-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const COLORS = {
+            red: 'rgb(255, 99, 132)',
+            orange: 'rgb(255, 159, 64)',
+            yellow: 'rgb(255, 205, 86)',
+            green: 'rgb(75, 192, 192)',
+            blue: 'rgb(54, 162, 235)',
+            purple: 'rgb(153, 102, 255)',
+            grey: 'rgb(201, 203, 207)'
+        }
+
+
+        function renderRevenuesChart() {
+            const revenuesChartData = {
+                labels: ['Red', 'Orange', 'Yellow', 'Green', 'Blue'],
+                datasets: [
+                    {
+                        label: 'Dataset 1',
+                        data: [
+                            10,
+                            20,
+                            30,
+                            40,
+                            50
+                        ],
+                        backgroundColor: Object.values(COLORS),
+                    }
+                ]
+            };
+
+            const revenuesChartConfig = {
+                type: 'pie',
+                data: revenuesChartData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Chart.js Pie Chart'
+                    }
+                    }
+                },
+            };
+
+            const ctx = document.getElementById('revenues-chart').getContext('2d');
+            const revenuesChart = new Chart(ctx, revenuesChartConfig);
+        }
+
+        function renderExpensesChart() {
+            const expensesChartData = {
+                labels: ['Red', 'Orange', 'Yellow', 'Green', 'Blue'],
+                datasets: [
+                    {
+                        label: 'Dataset 1',
+                        data: [
+                            10,
+                            20,
+                            30,
+                            40,
+                            50
+                        ],
+                        backgroundColor: Object.values(COLORS),
+                    }
+                ]
+            };
+
+            const expensesChartConfig = {
+                type: 'pie',
+                data: expensesChartData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Chart.js Pie Chart'
+                    }
+                    }
+                },
+            };
+
+            const ctx = document.getElementById('expenses-chart').getContext('2d');
+            const expensesChart = new Chart(ctx, expensesChartConfig);
+        }
+
+        function renderAssetAllocationChart() {
+            const assetAllocationChartData = {
+                labels: ['Red', 'Orange', 'Yellow', 'Green', 'Blue'],
+                datasets: [
+                    {
+                        label: 'Dataset 1',
+                        data: [
+                            10,
+                            20,
+                            30,
+                            40,
+                            50
+                        ],
+                        backgroundColor: Object.values(COLORS),
+                    }
+                ]
+            };
+
+            const assetAllocationChartConfig = {
+                type: 'pie',
+                data: assetAllocationChartData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Chart.js Pie Chart'
+                    }
+                    }
+                },
+            };
+
+            const ctx = document.getElementById('asset-allocation-chart').getContext('2d');
+            const assetAllocationChart = new Chart(ctx, assetAllocationChartConfig);
+        }
+
+        renderRevenuesChart();
+        renderExpensesChart();
+        renderAssetAllocationChart();
+    });
+</script>
