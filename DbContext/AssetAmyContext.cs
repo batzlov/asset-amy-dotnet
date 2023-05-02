@@ -26,7 +26,6 @@ public partial class AssetAmyContext : EF.DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseMySql("server=localhost;port=8889;database=asset-amy-dotnet;user id=root;password=root", Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.34-mysql"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
