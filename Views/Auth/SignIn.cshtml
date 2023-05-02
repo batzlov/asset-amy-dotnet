@@ -1,3 +1,5 @@
+@model SignInForm
+
 @{
     Layout = "Layouts/_AuthLayout";
     ViewData["Title"] = "Jetzt anmelden";
@@ -11,25 +13,38 @@
             <h2 class="card-title text-2xl">
                 Melde dich in deinem Konto an.
             </h2>
-            
-            <div class="form-control w-full max-w-xl">
-                <label class="label">
-                    <span class="label-text">Was ist deine E-Mail?</span>
-                </label>
-                <!-- set input-error class on input to display red border -->
-                <input type="text" placeholder="E-Mail" class="input input-bordered w-full max-w-xl" />
-            </div>
 
-            <div class="form-control w-full max-w-xl">
-                <label class="label">
-                    <span class="label-text">Welches Passwort möchtest du verwenden?</span>
-                </label>
-                <input type="password" placeholder="Passwort" class="input input-bordered w-full max-w-xl" />
-            </div>
+            <form>
+                <div class="form-control w-full max-w-xl">
+                    <label class="label">
+                        <span class="label-text">Was ist deine E-Mail?</span>
+                    </label>
+                    <input type="text" placeholder="E-Mail" class="input input-bordered w-full max-w-xl" asp-for="Email" />
+                    <label class="label">
+                        <span asp-validation-for="Email" class="label-text-alt text-error"></span>
+                    </label>
+                </div>
 
-            <div class="card-actions justify-center pt-5">
-                <button class="btn btn-primary">Anmelden</button>
-            </div>
+                <div class="form-control w-full max-w-xl">
+                    <label class="label">
+                        <span class="label-text">Welches Passwort möchtest du verwenden?</span>
+                    </label>
+                    <input type="password" placeholder="Passwort" class="input input-bordered w-full max-w-xl" asp-for="Password" />
+                    <label class="label">
+                        <span asp-validation-for="Email" class="label-text-alt text-error"></span>
+                    </label>
+                </div>
+
+                <div class="card-actions justify-center pt-5">
+                    <button class="btn btn-primary">Anmelden</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

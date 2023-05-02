@@ -38,7 +38,22 @@ public class AuthController : Controller
     [Route("sign-in")]
     public IActionResult SignIn()
     {
-        return View();
+        return View(new SignInForm());
+    }
+
+    [HttpPost]
+    [Route("sign-in")]
+    public IActionResult SignIn(SignInForm model)
+    {
+        if (ModelState.IsValid)
+        {
+            _logger.LogInformation("User signed in");
+            return RedirectToAction("Index", "Home");
+        } 
+        else 
+        {
+            return View(new SignInForm());
+        }
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
