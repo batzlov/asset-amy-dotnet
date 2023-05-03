@@ -13,7 +13,7 @@
             <h2 class="card-title text-2xl">
                 Erstelle jetzt ein Konto.
             </h2>
-            <form>
+            <form asp-controller="Auth" asp-action="SignUp" method="post">
                 <div class="form-control w-full max-w-xl">
                     <label class="label">
                         <span class="label-text">Was ist dein Vorname?</span>

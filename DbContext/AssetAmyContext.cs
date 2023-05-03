@@ -26,7 +26,7 @@ public partial class AssetAmyContext : EF.DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseMySql("server=localhost;port=8889;database=asset-amy-dotnet;user id=root;password=root", Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.34-mysql"));
+        => optionsBuilder.UseMySql("server=127.0.0.1;port=8889;database=asset-amy-dotnet;uid=root;pwd=root", Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.34-mysql"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
