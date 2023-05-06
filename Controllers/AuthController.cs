@@ -23,8 +23,6 @@ public class AuthController : Controller
     [Route("sign-up")]
     public IActionResult SignUp()
     {
-        _logger.LogInformation("Sign Up");
-
         return View(new SignUpForm());
     }
 
@@ -44,11 +42,11 @@ public class AuthController : Controller
 
             _userManager.Add(user);
 
-            return RedirectToAction("Index", "Home");
+            return Json(new { success = true, user = user });
         } 
         else 
         {
-            _logger.LogInformation("Something is off");
+            _logger.LogInformation("Something went wrong...");
             return View(model);
         }
     }

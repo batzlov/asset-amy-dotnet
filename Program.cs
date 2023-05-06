@@ -8,8 +8,10 @@ using System;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContextPool<asset_amy.DbContext.AssetAmyContext>(
-    options => {
+
+builder.Services.AddDbContext<asset_amy.DbContext.AssetAmyContext>(
+    options =>
+    {
         var connetionString = builder.Configuration.GetConnectionString("DefaultConnection");
         options.UseMySql(
             connetionString,
@@ -18,6 +20,7 @@ builder.Services.AddDbContextPool<asset_amy.DbContext.AssetAmyContext>(
     }
 );
 builder.Services.AddScoped<UserManager>();
+
 
 var app = builder.Build();
 

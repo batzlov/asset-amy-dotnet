@@ -5,22 +5,20 @@
     ViewData["Title"] = "Konto erstellen";
 }
 
-<div
-    class="auth-layout-container flex flex-column justify-center items-center w-100 px-10 xl:px-30"
->
+<div class="auth-layout-container flex flex-column justify-center items-center w-100 px-10 xl:px-30">
     <div class="card w-full max-w-2xl bg-base-100 shadow-xl">
         <div class="card-body">
             <h2 class="card-title text-2xl">
                 Erstelle jetzt ein Konto.
             </h2>
-            <form asp-controller="Auth" asp-action="SignUp" method="post">
+            <form data-ajax="true" data-ajax-method="post" data-ajax-begin="beginPost" data-ajax-complete="completedPost">
                 <div class="form-control w-full max-w-xl">
                     <label class="label">
                         <span class="label-text">Was ist dein Vorname?</span>
                     </label>
-                    <input type="text" placeholder="Vorname" class="input input-bordered w-full max-w-xl" asp-for="FirstName" />
+                    <input type="text" name="firstName" placeholder="Vorname" class="input input-bordered w-full max-w-xl" />
                     <label class="label">
-                        <span asp-validation-for="FirstName" class="label-text-alt text-error"></span>
+                        <span class="label-text-alt text-error"></span>
                     </label>
                 </div>
 
@@ -28,9 +26,9 @@
                     <label class="label">
                         <span class="label-text">Was ist dein Nachname?</span>
                     </label>
-                    <input type="text" placeholder="Nachname" class="input input-bordered w-full max-w-xl" asp-for="LastName" />
+                    <input type="text" placeholder="Nachname" class="input input-bordered w-full max-w-xl" name="lastName" />
                     <label class="label">
-                        <span asp-validation-for="LastName" class="label-text-alt text-error"></span>
+                        <span class="label-text-alt text-error"></span>
                     </label>
                 </div>
 
@@ -38,9 +36,9 @@
                     <label class="label">
                         <span class="label-text">Was ist deine E-Mail?</span>
                     </label>
-                    <input type="email" placeholder="E-Mail" class="input input-bordered w-full max-w-xl" asp-for="Email" />
+                    <input type="email" placeholder="E-Mail" class="input input-bordered w-full max-w-xl" name="email" />
                     <label class="label">
-                        <span asp-validation-for="Email" class="label-text-alt text-error"></span>
+                        <span class="label-text-alt text-error"></span>
                     </label>
                 </div>
 
@@ -50,9 +48,9 @@
                             Welches Passwort möchtest du verwenden?
                         </span>
                     </label>
-                    <input type="password" placeholder="Passwort" class="input input-bordered w-full max-w-xl" asp-for="Password" />
+                    <input type="password" placeholder="Passwort" class="input input-bordered w-full max-w-xl" name="password" />
                     <label class="label">
-                        <span asp-validation-for="Password" class="label-text-alt text-error"></span>
+                        <span class="label-text-alt text-error"></span>
                     </label>
                 </div>
 
@@ -60,20 +58,20 @@
                     <label class="label">
                         <span class="label-text">Bitte wiederhole dein Passwort</span>
                     </label>
-                    <input type="password" placeholder="Passwort" class="input input-bordered w-full max-w-xl" asp-for="ConfirmPassword" />
+                    <input type="password" placeholder="Passwort" class="input input-bordered w-full max-w-xl" name="confirmPassword" />
                     <label class="label">
-                        <span asp-validation-for="ConfirmPassword" class="label-text-alt text-error"></span>
+                        <span class="label-text-alt text-error"></span>
                     </label>
                 </div>
 
                 <div class="form-control pt-3 items-start">
                     <label class="label cursor-pointer max-w-xl">
-                        <input type="checkbox" class="checkbox" asp-for="PrivacyPolicyAccepted" data-val="false" data-rule-required="true" />
-                        <span class="label-text pl-2">Ich habe die Datenschutzerklärung gelesen und bin damit einverstanden.</span> 
+                        <input type="checkbox" class="checkbox" name="privacyPolicyAccepted" value="true" />
+                        <span class="label-text pl-2">Ich habe die Datenschutzerklärung gelesen und bin damit einverstanden.</span>
                     </label>
                 </div>
 
-                <div class="card-actions justify-center pt-5">
+                <div class="card-actions justify-center pt-5"> 
                     <button class="btn btn-primary">Konto erstellen</button>
                 </div>
             </form>
@@ -82,7 +80,5 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <script src="~/js/sign-up.js" type="module"></script>
 }

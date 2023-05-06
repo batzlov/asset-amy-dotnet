@@ -36,3 +36,7 @@
 .input-validation-error ~ .label-text {
     color: hsl(var(--er)) !important;
 }
+
+.input-error ~ .label-text {
+    color: hsl(var(--er)) !important;
+}

@@ -1,0 +1,135 @@
+export class Form {
+    constructor(form, schema) {
+        this.form = form;
+        this.schema = schema;
+        this.errors = [];
+        this.validators = {
+            required: (input, value) => {
+                return value !== "";
+            },
+            requiredCheckboxTrue: (input, value) => {
+                return input.checked === true;
+            },
+            email: (input, value) => {
+                return value.includes("@");
+            },
+            min: (input, value, min) => {
+                return value.length >= min;
+            },
+            max: (input, value, max) => {
+                return value.length <= max;
+            },
+            match: (input, value, matchInputName) => {
+                const matchInput = this.form.querySelector(
+                    `[name="${matchInputName}"]`
+                );
+
+                if (matchInput) {
+                    return value === matchInput.value;
+                }
+
+                return false;
+            },
+        };
+        this.inputs = this.form.querySelectorAll(
+            "input, select, textarea, input[type=checkbox]"
+        );
+
+        this.init();
+    }
+
+    init() {
+        // initialize on blur validation for all inputs
+        for (let input of this.inputs) {
+            if (this.schema[input.name].validateOnBlur === false) {
+                continue;
+            }
+
+            if (input.type === "checkbox") {
+                input.addEventListener("change", () => {
+                    console.log("is checked ?", input.checked);
+                    this.validate(input);
+                });
+            } else {
+                input.addEventListener("blur", () => {
+                    this.validate(input);
+                });
+            }
+        }
+    }
+
+    validate(input) {
+        this.errors = this.errors.filter((e) => e.inputName !== input.name);
+
+        const inputName = input.name;
+        const inputValue = input.value;
+        const validationRules = this.schema[inputName].rules;
+
+        if (!validationRules) {
+            return true;
+        }
+
+        for (let rule of validationRules) {
+            let fieldIsValid;
+            let validator;
+
+            if (rule.includes(":")) {
+                const [ruleName, ruleValue] = rule.split(":");
+                validator = this.validators[ruleName];
+                fieldIsValid = validator(input, inputValue, ruleValue);
+            } else {
+                validator = this.validators[rule];
+                fieldIsValid = validator(input, inputValue);
+            }
+
+            if (!fieldIsValid) {
+                this.errors.push({ inputName, rule });
+                input.classList.add("input-error");
+            } else if (
+                !this.errors.some((error) => error.inputName === inputName)
+            ) {
+                console.log("mark field valid");
+                input.classList.remove("input-error");
+            }
+        }
+
+        return this.errors;
+    }
+
+    validateAll() {
+        this.errors = [];
+
+        for (let input of this.inputs) {
+            this.validate(input);
+        }
+
+        return this.errors;
+    }
+
+    isValid() {
+        this.validateAll();
+
+        return this.errors.length === 0;
+    }
+
+    toObj() {
+        const formData = new FormData(this.form);
+        const obj = {};
+
+        for (let [key, value] of formData.entries()) {
+            switch (this.schema[key].type) {
+                case "number":
+                    obj[key] = Number(value);
+                    break;
+                case "boolean":
+                    obj[key] = Boolean(value);
+                    break;
+                default:
+                    obj[key] = String(value);
+                    break;
+            }
+        }
+
+        return obj;
+    }
+}
