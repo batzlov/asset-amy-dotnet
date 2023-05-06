@@ -1,4 +1,6 @@
 ﻿import { Form } from "./shared/form.js";
+import { HttpRequest } from "./shared/request.js";
+import { Toast } from "./shared/toast.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const schema = {
@@ -28,6 +30,14 @@ document.addEventListener("DOMContentLoaded", () => {
         },
     };
 
+    const elementFromString = (htmlString) => {
+        const template = document.createElement("template");
+
+        template.innerHTML = htmlString.trim();
+
+        return template.content.firstElementChild;
+    };
+
     const init = () => {
         const form = new Form(document.querySelector("form"), schema);
 
@@ -36,7 +46,13 @@ document.addEventListener("DOMContentLoaded", () => {
             event.stopPropagation();
 
             if (form.isValid()) {
-                console.log("Form is valid");
+                HttpRequest.post("/api/sign-up", form.toObj()).then(
+                    (response) => {
+                        console.log(response);
+                    }
+                );
+            } else {
+                Toast.show("error", "Etwas stimmt nicht.", 3000);
             }
         });
     };

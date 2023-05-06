@@ -1,5 +1,5 @@
 export class Form {
-    constructor(form, schema) {
+    constructor(form, schema, options = {}) {
         this.form = form;
         this.schema = schema;
         this.errors = [];
@@ -34,6 +34,7 @@ export class Form {
         this.inputs = this.form.querySelectorAll(
             "input, select, textarea, input[type=checkbox]"
         );
+        this.options = options;
 
         this.init();
     }
