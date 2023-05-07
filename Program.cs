@@ -4,6 +4,7 @@ using asset_amy.Managers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Net.Http.Headers;
 using System;
 using System.Text;
 
@@ -23,20 +24,36 @@ builder.Services.AddDbContext<asset_amy.DbContext.AssetAmyContext>(
 );
 builder.Services.AddScoped<UserManager>();
 
-builder.Services.AddAuthentication().AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
-        ValidateAudience = false,
-        ValidateIssuer = false,
-        IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(
-                builder.Configuration.GetSection("AppSettings:Token").Value!
+builder.Services.AddAuthentication(options => {
+    options.DefaultScheme = "JWT_or_Cookie";
+    options.DefaultChallengeScheme = "JWT_or_Cookie";
+})
+    .AddCookie("Cookies", options => {
+        options.LoginPath = "/sign-in";
+        options.ExpireTimeSpan = TimeSpan.FromDays(1);
+    })
+    .AddJwtBearer(options => {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            ValidateAudience = false,
+            ValidateIssuer = false,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(
+                    builder.Configuration.GetSection("AppSettings:Token").Value!
+                )
             )
-        )
-    };
-});
+        };
+    })
+    .AddPolicyScheme("JWT_or_Cookie", "JWT_or_Cookie", options => {
+        options.ForwardDefaultSelector = context => {
+            string jwt = context.Request.Headers[HeaderNames.Authorization];
+            if (!string.IsNullOrEmpty(jwt) && jwt.StartsWith("Bearer "))
+            	return "Bearer";
+
+            return "Cookies";
+        };
+    });
 
 
 var app = builder.Build();

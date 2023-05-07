@@ -30,14 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
         },
     };
 
-    const elementFromString = (htmlString) => {
-        const template = document.createElement("template");
-
-        template.innerHTML = htmlString.trim();
-
-        return template.content.firstElementChild;
-    };
-
     const init = () => {
         const form = new Form(document.querySelector("form"), schema);
 

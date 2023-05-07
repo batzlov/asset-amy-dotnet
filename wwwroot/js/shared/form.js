@@ -48,7 +48,6 @@ export class Form {
 
             if (input.type === "checkbox") {
                 input.addEventListener("change", () => {
-                    console.log("is checked ?", input.checked);
                     this.validate(input);
                 });
             } else {
@@ -89,7 +88,6 @@ export class Form {
             } else if (
                 !this.errors.some((error) => error.inputName === inputName)
             ) {
-                console.log("mark field valid");
                 input.classList.remove("input-error");
             }
         }

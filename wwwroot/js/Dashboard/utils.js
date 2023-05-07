@@ -37,3 +37,11 @@ export function renderChart(ctx, data, config, colors) {
 
     new Chart(ctx, chartConfig);
 }
+
+export function elementFromString(htmlString) {
+    const template = document.createElement("template");
+
+    template.innerHTML = htmlString.trim();
+
+    return template.content.firstElementChild;
+}
