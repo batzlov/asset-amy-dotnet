@@ -18,6 +18,11 @@ namespace asset_amy.Managers
 			Container.SaveChanges();
 		}
 
+		public User? GetByEmail(string email)
+		{
+			return Container.Users.FirstOrDefault(u => u.Email == email);
+		}
+
         private AssetAmyContext Container { get; set; }
     }
 }

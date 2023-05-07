@@ -2,8 +2,10 @@ using MySqlConnector;
 using asset_amy;
 using asset_amy.Managers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,21 @@ builder.Services.AddDbContext<asset_amy.DbContext.AssetAmyContext>(
     }
 );
 builder.Services.AddScoped<UserManager>();
+
+builder.Services.AddAuthentication().AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        ValidateAudience = false,
+        ValidateIssuer = false,
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(
+                builder.Configuration.GetSection("AppSettings:Token").Value!
+            )
+        )
+    };
+});
 
 
 var app = builder.Build();
