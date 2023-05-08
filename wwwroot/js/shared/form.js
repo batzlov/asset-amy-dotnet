@@ -111,6 +111,24 @@ export class Form {
         return this.errors.length === 0;
     }
 
+    markAsInvalid(inputNames = []) {
+        if (inputNames.length === 0) {
+            for (let input of this.inputs) {
+                input.classList.add("input-error");
+            }
+
+            return true;
+        }
+
+        for (let input of this.inputs) {
+            if (inputNames.includes(input.name)) {
+                input.classList.add("input-error");
+            }
+        }
+
+        return true;
+    }
+
     toObj() {
         const formData = new FormData(this.form);
         const obj = {};

@@ -1,5 +1,6 @@
 import { Form } from "../shared/form.js";
 import { HttpRequest } from "../shared/request.js";
+import { Toast } from "../shared/toast.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const schema = {
@@ -21,15 +22,17 @@ document.addEventListener("DOMContentLoaded", () => {
             event.stopPropagation();
 
             if (form.isValid()) {
-                HttpRequest.post("/api/sign-in", form.toObj())
-                    .then((response) => {
-                        console.log(response);
+                HttpRequest.post("/api/sign-in", form.toObj(), {
+                    onSuccess: (response) => {
                         localStorage.setItem("token", response.token);
                         window.location.href = "/dashboard";
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
+                    },
+                    onError: (error) => {
+                        console.log(Toast);
+                        form.markAsInvalid();
+                        Toast.show("error", error.message);
+                    },
+                });
             }
         });
     };

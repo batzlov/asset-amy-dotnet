@@ -11,17 +11,35 @@ export class HttpRequest {
         return response.json();
     }
 
-    static async post(url, data) {
-        const response = await fetch(url, {
+    static async post(url, data, { onSuccess, onError } = {}) {
+        const response = fetch(url, {
             method: "POST",
             headers: {
                 Bearer: "Bearer " + localStorage.getItem("token"),
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
-        });
+        })
+            .then(async (response) => {
+                if (response.status >= 400) {
+                    console.log("err");
+                    const json = await response.json();
+                    const errorMessage = json.message || response.statusText;
+                    throw new Error(errorMessage);
+                }
 
-        return response.json();
+                return response.json();
+            })
+            .then((json) => {
+                if (onSuccess) {
+                    onSuccess(json);
+                }
+            })
+            .catch((error) => {
+                if (onError) {
+                    onError(error);
+                }
+            });
     }
 
     static async put(url, data) {

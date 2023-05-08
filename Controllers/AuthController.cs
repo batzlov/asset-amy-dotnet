@@ -72,6 +72,18 @@ public class AuthController : Controller
         }
     }
 
+    [HttpGet]
+    [Route("sign-out")]
+    public IActionResult SignOut()
+    {
+        foreach (var cookie in Request.Cookies.Keys)
+        {
+            Response.Cookies.Delete(cookie);
+        }
+
+        return RedirectToAction("Index", "Home");
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
