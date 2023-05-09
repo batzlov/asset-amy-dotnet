@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         window.location.href = "/dashboard";
                     },
                     onError: (error) => {
-                        console.log(Toast);
                         form.markAsInvalid();
                         Toast.show("error", error.message);
                     },
