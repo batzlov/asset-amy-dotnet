@@ -1,6 +1,6 @@
-﻿import { Form } from "./shared/form.js";
-import { HttpRequest } from "./shared/request.js";
-import { Toast } from "./shared/toast.js";
+﻿import { Form } from "../shared/form.js";
+import { HttpRequest } from "../shared/request.js";
+import { Toast } from "../shared/toast.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const schema = {
