@@ -1,15 +1,24 @@
 {
-  "name": "prisma",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "prisma": "^4.13.0"
-  }
+    "name": "prisma",
+    "version": "1.0.0",
+    "description": "",
+    "prisma": {
+        "seed": "ts-node prisma/seed.ts"
+    },
+    "main": "index.js",
+    "scripts": {
+        "prisma:reset": "npx prisma db push --force-reset && npx prisma db seed",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "prisma": "^4.13.0"
+    },
+    "dependencies": {
+        "@prisma/client": "^4.14.0",
+        "bcrypt": "^5.1.0",
+        "ts-node": "^10.9.1"
+    }
 }

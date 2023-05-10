@@ -22,6 +22,7 @@ builder.Services.AddDbContext<asset_amy.DbContext.AssetAmyContext>(
         );
     }
 );
+builder.Services.AddScoped<ExpenseManager>();
 builder.Services.AddScoped<UserManager>();
 
 builder.Services.AddAuthentication(options => {

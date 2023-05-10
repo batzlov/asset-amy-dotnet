@@ -6,56 +6,53 @@
 <div class="p-6">
     <div class="card bg-base-100">
         <div class="card-body shadow-xl">
-            <h1 class="text-xl font-semibold">
+            <div class="text-xl font-semibold inline-block">
                 Ausgaben
-            </h1>
-            <div class="grid grid-cols-1 2xl:grid-cols-2 pt-6 gap-2">
-                <div class="shadow-md border-info-content">
+                <div class="inline-block float-right">
+                    <div class="inline-block float-right">
+                        <button id="create-expense-btn" class="btn btn-primary px-6 btn-sm">hinzufügen</button>
+                    </div>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="grid grid-cols-1 2xl:grid-cols-2 xl:pt-6 gap-2">
+                <div class="shadow-md border-info-content overflow-x-auto w-full">
                     <table class="table w-full">
                         <thead>
                             <tr>
-                                <th
-                                    class="bg-accent  text-primary-content"
-                                ></th>
-                                <th
-                                    class="bg-accent  text-primary-content"
-                                >Name</th>
-                                <th
-                                    class="bg-accent  text-primary-content"
-                                >Job</th>
-                                <th
-                                    class="bg-accent  text-primary-content"
-                                >Favorite Color</th>
+                                <th></th>
+                                <th>Name der Ausgabe</th>
+                                <th>Höhe der Ausgabe</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>1</th>
-                                <td>Cy Ganderton</td>
-                                <td>Quality Control Specialist</td>
-                                <td>Blue</td>
-                            </tr>
-                            <tr>
-                                <th>2</th>
-                                <td>Hart Hagerty</td>
-                                <td>Desktop Support Technician</td>
-                                <td>Purple</td>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <td>Brice Swyre</td>
-                                <td>Tax Accountant</td>
-                                <td>Red</td>
-                            </tr>
+                            @foreach (var expense in ViewBag.Expenses)
+                            {
+                                <tr>
+                                    <th>
+                                        @expense.Id
+                                    </th>
+                                    <td>
+                                        @expense.Name
+                                    </td>
+                                    <td>
+                                        @expense.Value
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
-                        <tfoot>
+                        @* <tfoot>
                             <tr>
                                 <th></th> 
                                 <th></th> 
                                 <th></th> 
                                 <th></th> 
                             </tr>
-                        </tfoot>
+                        </tfoot> *@
                     </table>
                 </div>
                 <div class="bg-base-300 rounded">
@@ -65,3 +62,30 @@
         </div>
     </div>
 </div>
+
+<template id="expense-modal">
+    <h3 class="font-bold text-xl">Ausgabe hinzufügen</h3>
+    <div class="divider my-1"></div>
+    <form>
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">Name der Ausgabe</span>
+            </label>
+            <input type="text" placeholder="Ausgabe" class="input input-bordered">
+            <label class="label">
+                <span class="label-text"></span>
+            </label>
+        </div>
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">Höhe der Ausgabe</span>
+            </label>
+            <input type="text" placeholder="Ausgabe" class="input input-bordered">
+            <label class="label">
+                <span class="label-text"></span>
+            </label>
+        </div>
+    </form>
+</template>
+
+<script src="~/js/dashboard/expenses.js" type="module" asp-append-version="true"></script>

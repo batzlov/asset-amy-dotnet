@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using asset_amy.Models;
+using asset_amy.Managers;
 
 namespace asset_amy.Controllers;
 
@@ -9,10 +10,15 @@ namespace asset_amy.Controllers;
 public class DashboardController : Controller
 {
     private readonly ILogger<DashboardController> _logger;
+    private readonly ExpenseManager _expenseManager;
 
-    public DashboardController(ILogger<DashboardController> logger)
+    public DashboardController(
+        ILogger<DashboardController> logger,
+        ExpenseManager expenseManager
+    )
     {
         _logger = logger;
+        _expenseManager = expenseManager;
     }
 
     [Route("dashboard")]
@@ -24,6 +30,9 @@ public class DashboardController : Controller
     [Route("dashboard/expenses")]
     public IActionResult Expenses()
     {
+        var expenses = _expenseManager.GetAllForUser(1);
+        ViewBag.Expenses = expenses;
+
         return View();
     }
 
