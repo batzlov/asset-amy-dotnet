@@ -19,21 +19,18 @@ public class AuthController : Controller
         _userManager = userManager;
     }
 
-    [HttpGet]
     [Route("sign-up")]
     public IActionResult SignUp()
     {
         return View();
     }
 
-    [HttpGet]
     [Route("sign-in")]
     public IActionResult SignIn()
     {
         return View();
     }
 
-    [HttpGet]
     [Route("sign-out")]
     public IActionResult SignOut()
     {
