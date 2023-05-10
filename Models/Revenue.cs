@@ -5,19 +5,19 @@ namespace asset_amy.Models;
 
 public partial class Revenue
 {
-    public int Id { get; set; }
+    public int id { get; set; }
 
-    public string Name { get; set; } = null!;
+    public string name { get; set; } = null!;
 
-    public string Description { get; set; } = null!;
+    public string description { get; set; } = null!;
 
-    public double Value { get; set; }
+    public double value { get; set; }
 
-    public DateTime CreatedAt { get; set; }
+    public DateTime createdAt { get; set; }
 
-    public DateTime UpdatedAt { get; set; }
+    public DateTime updatedAt { get; set; }
 
-    public int BelongsToId { get; set; }
+    public int belongsToId { get; set; }
 
-    public virtual User BelongsTo { get; set; } = null!;
+    public virtual User belongsTo { get; set; } = null!;
 }

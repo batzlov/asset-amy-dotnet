@@ -31,7 +31,7 @@ public class DashboardController : Controller
     public IActionResult Expenses()
     {
         var expenses = _expenseManager.GetAllForUser(1);
-        ViewBag.Expenses = expenses;
+        ViewBag.expenses = expenses;
 
         return View();
     }

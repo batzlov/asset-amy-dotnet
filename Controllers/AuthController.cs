@@ -23,53 +23,14 @@ public class AuthController : Controller
     [Route("sign-up")]
     public IActionResult SignUp()
     {
-        return View(new SignUpForm());
+        return View();
     }
 
-    [HttpPost]
-    [Route("sign-up")]
-    public IActionResult SignUp(SignUpForm model)
-    {
-        if (ModelState.IsValid)
-        {
-            _logger.LogInformation("User signed up");
-
-            var user = new User();
-            user.FirstName = model.FirstName;
-            user.LastName = model.LastName;
-            user.Email = model.Email;
-            user.Password = model.Password;
-
-            _userManager.Add(user);
-
-            return Json(new { success = true, user = user });
-        } 
-        else 
-        {
-            _logger.LogInformation("Something went wrong...");
-            return View(model);
-        }
-    }
-
+    [HttpGet]
     [Route("sign-in")]
     public IActionResult SignIn()
     {
-        return View(new SignInForm());
-    }
-
-    [HttpPost]
-    [Route("sign-in")]
-    public IActionResult SignIn(SignInForm model)
-    {
-        if (ModelState.IsValid)
-        {
-            _logger.LogInformation("User signed in");
-            return RedirectToAction("Index", "Home");
-        } 
-        else 
-        {
-            return View(new SignInForm());
-        }
+        return View();
     }
 
     [HttpGet]

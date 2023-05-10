@@ -9,14 +9,14 @@ namespace asset_amy.Managers
     {
         public ExpenseManager(AssetAmyContext context)
         {
-            Container = context;
+            container = context;
         }
 
         public Expense[] GetAllForUser(int userId)
         {
-            return Container.Expenses.Where(e => e.BelongsToId == userId).ToArray();
+            return container.expenses.Where(e => e.belongsToId == userId).ToArray();
         }
 
-        private AssetAmyContext Container { get; set; }
+        private AssetAmyContext container { get; set; }
     }
 }

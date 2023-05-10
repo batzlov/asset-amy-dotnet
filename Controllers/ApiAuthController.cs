@@ -47,10 +47,10 @@ public class ApiAuthController : ControllerBase
         }
 
         var user = new User();
-        user.FirstName = dto.firstName;
-        user.LastName = dto.lastName;
-        user.Email = dto.email;
-        user.Password = BCrypt.Net.BCrypt.HashPassword(dto.password);
+        user.firstName = dto.firstName;
+        user.lastName = dto.lastName;
+        user.email = dto.email;
+        user.password = BCrypt.Net.BCrypt.HashPassword(dto.password);
 
         _userManager.Add(user);
 
@@ -66,7 +66,7 @@ public class ApiAuthController : ControllerBase
             return Unauthorized(new { ok = false, message = "Deine Anmeldedaten scheinen nicht korrekt zu sein." });
         }
 
-        if(!BCrypt.Net.BCrypt.Verify(dto.password, user.Password))
+        if(!BCrypt.Net.BCrypt.Verify(dto.password, user.password))
         {
             return Unauthorized(new { ok = false, message = "Deine Anmeldedaten scheinen nicht korrekt zu sein." });
         }
@@ -79,8 +79,8 @@ public class ApiAuthController : ControllerBase
     private void CreateCookie(User user) 
     {
         var claims = new List<Claim> {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),
+            new Claim(ClaimTypes.Email, user.email),
         };
 
         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -102,8 +102,8 @@ public class ApiAuthController : ControllerBase
     private string CreateJwtToken(User user)
     {
         List<Claim> claims = new List<Claim> {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),
+            new Claim(ClaimTypes.Email, user.email),
         };
 
         var key = new SymmetricSecurityKey(

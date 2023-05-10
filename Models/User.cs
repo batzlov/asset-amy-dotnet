@@ -5,25 +5,25 @@ namespace asset_amy.Models;
 
 public partial class User
 {
-    public int Id { get; set; }
+    public int id { get; set; }
 
-    public string FirstName { get; set; } = null!;
+    public string firstName { get; set; } = null!;
 
-    public string LastName { get; set; } = null!;
+    public string lastName { get; set; } = null!;
 
-    public string Email { get; set; } = null!;
+    public string email { get; set; } = null!;
 
-    public string Password { get; set; } = null!;
+    public string password { get; set; } = null!;
 
-    public string Role { get; set; } = null!;
+    public string role { get; set; } = null!;
 
-    public DateTime CreatedAt { get; set; }
+    public DateTime createdAt { get; set; }
 
-    public DateTime UpdatedAt { get; set; }
+    public DateTime updatedAt { get; set; }
 
-    public virtual ICollection<Asset> Assets { get; set; } = new List<Asset>();
+    public virtual ICollection<Asset> assets { get; set; } = new List<Asset>();
 
-    public virtual ICollection<Expense> Expenses { get; set; } = new List<Expense>();
+    public virtual ICollection<Expense> expenses { get; set; } = new List<Expense>();
 
-    public virtual ICollection<Revenue> Revenues { get; set; } = new List<Revenue>();
+    public virtual ICollection<Revenue> revenues { get; set; } = new List<Revenue>();
 }

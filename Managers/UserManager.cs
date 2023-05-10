@@ -9,21 +9,21 @@ namespace asset_amy.Managers
 	{
 		public UserManager(AssetAmyContext context)
 		{
-			Container = context;
+			container = context;
 		}
 
 		public void Add(User user)
 		{
-			Container.Users.Add(user);
-			Container.SaveChanges();
+			container.users.Add(user);
+			container.SaveChanges();
 		}
 
 		public User? GetByEmail(string email)
 		{
-			return Container.Users.FirstOrDefault(u => u.Email == email);
+			return container.users.FirstOrDefault(u => u.email == email);
 		}
 
-        private AssetAmyContext Container { get; set; }
+        private AssetAmyContext container { get; set; }
     }
 }
 
