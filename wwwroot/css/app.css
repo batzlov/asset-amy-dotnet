@@ -48,3 +48,7 @@ svg {
 .input-error ~ .label-text {
     color: hsl(var(--er)) !important;
 }
+
+.input-error ~ .label > span {
+    display: block;
+}

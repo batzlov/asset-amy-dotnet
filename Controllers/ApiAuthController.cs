@@ -35,9 +35,15 @@ public class ApiAuthController : ControllerBase
     [Route("api/sign-up")]
     public IActionResult SignUp(SignUpUserDto dto)
     {
+        if(!ModelState.IsValid) {
+            return BadRequest(new { ok = false, message = "Deine Angaben sind fehlerhaft." });
+        } else {
+            _logger.LogInformation("User is valid");
+        }
+
         if(_userManager.GetByEmail(dto.email) != null)
         {
-            return BadRequest("An Account with this email already exists.");
+            return BadRequest(new { ok = false, message = "Diese E-Mail ist bereits mit einem Account bei uns registriert." });
         }
 
         var user = new User();
@@ -57,12 +63,12 @@ public class ApiAuthController : ControllerBase
     {
         var user = _userManager.GetByEmail(dto.email);
         if(user == null) {
-            return Unauthorized(new { ok = false, message = "Invalid email or password." });
+            return Unauthorized(new { ok = false, message = "Deine Anmeldedaten scheinen nicht korrekt zu sein." });
         }
 
         if(!BCrypt.Net.BCrypt.Verify(dto.password, user.Password))
         {
-            return Unauthorized(new { ok = false, message = "Invalid email or password." });
+            return Unauthorized(new { ok = false, message = "Deine Anmeldedaten scheinen nicht korrekt zu sein." });
         }
 
         CreateCookie(user);

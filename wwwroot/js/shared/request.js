@@ -22,7 +22,6 @@ export class HttpRequest {
         })
             .then(async (response) => {
                 if (response.status >= 400) {
-                    console.log("err");
                     const json = await response.json();
                     const errorMessage = json.message || response.statusText;
                     throw new Error(errorMessage);
