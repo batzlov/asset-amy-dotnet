@@ -1,3 +1,11 @@
+/*
+    fix to prevent large flashing of icons when normal css still loads
+*/
+svg {
+    width: 0px;
+    /* height: 0px; */
+}
+
 .auth-layout-container {
     min-height: calc(100vh - 48px);
     padding-bottom: 48px;
