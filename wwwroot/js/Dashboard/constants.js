@@ -36,6 +36,14 @@ export const COLORS = {
     blue: "rgb(54, 162, 235)",
     purple: "rgb(153, 102, 255)",
     grey: "rgb(201, 203, 207)",
+    color1: "#003f5c",
+    color2: "#2f4b7c",
+    color3: "#665191",
+    color4: "#a05195",
+    color5: "#d45087",
+    color6: "#f95d6a",
+    color7: "#ff7c43",
+    color8: "#ffa600",
 };
 
 export const CHART_TYPES = {
