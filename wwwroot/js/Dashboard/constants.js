@@ -1,31 +1,31 @@
 export const REVENUES = [
-    { name: "Bafög", amount: 850 },
-    { name: "Nebenjob", amount: 250 },
+    { name: "Bafög", value: 850 },
+    { name: "Nebenjob", value: 250 },
 ];
 
 export const EXPENSES = [
-    { name: "Miete", amount: 350 },
-    { name: "Konsumausgaben", amount: 300 },
-    { name: "Krankenkasse", amount: 122.78 },
-    { name: "Spotify", amount: 9.99 },
-    { name: "McFit", amount: 20.0 },
-    { name: "iCloud", amount: 2.99 },
-    { name: "Reisekrankenversicherung", amount: 0.75 },
-    { name: "Strom", amount: 39.0 },
-    { name: "Mobilfunk", amount: 10.0 },
-    { name: "Brillenversicherung", amount: 0.83 },
-    { name: "BahnCard", amount: 3.08 },
-    { name: "Hosting", amount: 5.0 },
-    { name: "Internet", amount: 25.0 },
-    { name: "Haftpflichtversicherung", amount: 3.48 },
+    { name: "Miete", value: 350 },
+    { name: "Konsumausgaben", value: 300 },
+    { name: "Krankenkasse", value: 122.78 },
+    { name: "Spotify", value: 9.99 },
+    { name: "McFit", value: 20.0 },
+    { name: "iCloud", value: 2.99 },
+    { name: "Reisekrankenversicherung", value: 0.75 },
+    { name: "Strom", value: 39.0 },
+    { name: "Mobilfunk", value: 10.0 },
+    { name: "Brillenversicherung", value: 0.83 },
+    { name: "BahnCard", value: 3.08 },
+    { name: "Hosting", value: 5.0 },
+    { name: "Internet", value: 25.0 },
+    { name: "Haftpflichtversicherung", value: 3.48 },
 ];
 
 export const ASSETS = [
-    { name: "Bondora Go & Grow", type: "P2P", amount: 2400 },
-    { name: "LBS Bausparen", type: "Bausparen", amount: 1400 },
-    { name: "ING-Depot", type: "ETF", amount: 5500 },
-    { name: "Trade-Depot", type: "ETF", amount: 150 },
-    { name: "Tagegeldkonto", type: "Tagesgeld", amount: 3000 },
+    { name: "Bondora Go & Grow", type: "P2P", value: 2400 },
+    { name: "LBS Bausparen", type: "Bausparen", value: 1400 },
+    { name: "ING-Depot", type: "ETF", value: 5500 },
+    { name: "Trade-Depot", type: "ETF", value: 150 },
+    { name: "Tagegeldkonto", type: "Tagesgeld", value: 3000 },
 ];
 
 export const COLORS = {

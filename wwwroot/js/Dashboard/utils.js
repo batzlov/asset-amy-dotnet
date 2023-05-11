@@ -11,7 +11,7 @@ export function renderChart(ctx, data, config, colors) {
             {
                 label: config.datasetLabel,
                 data: data.map((entry) => {
-                    return entry.amount;
+                    return Number(entry.value);
                 }),
                 backgroundColor: Object.values(colors),
             },
@@ -35,7 +35,7 @@ export function renderChart(ctx, data, config, colors) {
         },
     };
 
-    new Chart(ctx, chartConfig);
+    return new Chart(ctx, chartConfig);
 }
 
 export function elementFromString(htmlString) {

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using asset_amy.Models;
 using asset_amy.Managers;
+using Newtonsoft.Json;
 
 namespace asset_amy.Controllers;
 
@@ -32,6 +33,7 @@ public class DashboardController : Controller
     {
         var expenses = _expenseManager.GetAllForUser(1);
         ViewBag.expenses = expenses;
+        ViewBag.expensesJson = JsonConvert.SerializeObject(expenses);
 
         return View();
     }

@@ -155,8 +155,20 @@
         </div>
     </div>
 
-    <script src="~/lib/tailwind/full.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <input type="checkbox" id="confirm-modal-toggle" class="modal-toggle">
+    <div id="confirm-modal" class="modal">
+        <div class="modal-box">
+            <span id="circle-close-btn" class="btn btn-ghost btn-sm btn-circle absolute right-2 top-2">✕</span>
+            <div class="modal-content"></div>
+            <div class="modal-action">
+                <button id="close-btn" class="btn btn-sm px-6">nein</button>
+                <button id="save-btn" class="btn btn-primary btn-sm px-6">ja</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/tailwind/full.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js" asp-append-version="true"></script>
     <script src="~/js/app.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

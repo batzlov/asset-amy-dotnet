@@ -19,6 +19,9 @@ export class Form {
             max: (input, value, max) => {
                 return value.length <= max;
             },
+            pattern: (input, value, pattern) => {
+                return new RegExp(pattern).test(value);
+            },
             match: (input, value, matchInputName) => {
                 const matchInput = this.form.querySelector(
                     `[name="${matchInputName}"]`
@@ -127,6 +130,20 @@ export class Form {
         }
 
         return true;
+    }
+
+    patchValues(obj) {
+        for (let [key, value] of Object.entries(obj)) {
+            const input = this.form.querySelector(`[name="${key}"]`);
+
+            if (input) {
+                input.value = value;
+            }
+        }
+    }
+
+    reset() {
+        this.form.reset();
     }
 
     toObj() {
