@@ -9,7 +9,7 @@ public partial class Expense
 
     public string name { get; set; } = null!;
 
-    public string description { get; set; } = null!;
+    public string? description { get; set; }
 
     public double value { get; set; }
 
@@ -20,4 +20,22 @@ public partial class Expense
     public int belongsToId { get; set; }
 
     public virtual User belongsTo { get; set; } = null!;
+}
+
+public class CreateExpenseDto
+{
+    public string name { get; set; } = null!;
+
+    public string? description { get; set; }
+
+    public double value { get; set; }
+}
+
+public class UpdateExpenseDto
+{
+    public string name { get; set; } = null!;
+
+    public string? description { get; set; }
+
+    public double value { get; set; }
 }
