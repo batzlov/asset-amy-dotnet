@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using asset_amy.Models;
 using asset_amy.Managers;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace asset_amy.Controllers;
 
@@ -32,8 +35,8 @@ public class ApiExpenseController : ControllerBase
         expense.name = dto.name;
         expense.value = dto.value;
 
-        // TODO: get currently logged in user
-        expense.belongsToId = 1;
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        expense.belongsToId = int.Parse(userId!);
 
         if (!ModelState.IsValid) {
             return BadRequest(new { ok = false, message = "Deine Angaben sind fehlerhaft." });
@@ -48,7 +51,8 @@ public class ApiExpenseController : ControllerBase
     [Route("api/expenses")]
     public IActionResult GetExpenses()
     {
-        var expenses = _expenseManager.GetAllForUser(1);
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var expenses = _expenseManager.GetAllForUser(userId);
 
         return Ok(expenses);
     }
@@ -73,8 +77,6 @@ public class ApiExpenseController : ControllerBase
 
         expense.name = dto.name;
         expense.value = dto.value;
-
-        expense.belongsToId = 1;
 
         _expenseManager.Update(expense);
 

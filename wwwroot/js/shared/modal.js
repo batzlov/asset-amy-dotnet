@@ -3,6 +3,9 @@ export class Modal {
         this.template = template;
         this.options = options;
 
+        this.onSave = options.onSave || null;
+        this.onClose = options.onClose || null;
+
         this.modalSelector = options.modalSelector || "#modal";
         this.modalToggleSelector =
             options.modalToggleSelector || "#modal-toggle";
@@ -21,8 +24,8 @@ export class Modal {
         circleCloseBtn.addEventListener("click", () => {
             this.close();
 
-            if (this.options.onClose) {
-                this.options.onClose();
+            if (this.onClose) {
+                this.onClose();
             }
         });
 
@@ -30,15 +33,15 @@ export class Modal {
         closeBtn.addEventListener("click", () => {
             this.close();
 
-            if (this.options.onClose) {
-                this.options.onClose();
+            if (this.onClose) {
+                this.onClose();
             }
         });
 
         const saveBtn = this.modal.querySelector("#save-btn");
         saveBtn.addEventListener("click", () => {
-            if (this.options.onSave) {
-                this.options.onSave();
+            if (this.onSave) {
+                this.onSave();
             }
         });
     }

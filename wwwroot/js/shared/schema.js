@@ -5,6 +5,6 @@
     },
     value: {
         type: "number",
-        rules: ["required", "pattern:/[0-9]/"],
+        rules: ["required", "number"],
     },
 };

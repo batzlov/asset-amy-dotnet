@@ -1,5 +1,6 @@
 import { Form } from "../shared/form.js";
 import { Modal } from "../shared/modal.js";
+import { HttpRequest } from "../shared/request.js";
 import { Toast } from "../shared/toast.js";
 import { expenseSchema } from "../shared/schema.js";
 import { renderChart } from "./utils.js";
@@ -25,6 +26,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const createExpenseBtn = document.getElementById("create-expense-btn");
         createExpenseBtn.addEventListener("click", () => {
+            form.reset();
+            modal.onSave = () => {
+                createExpense();
+            };
             modal.open();
         });
 
@@ -36,6 +41,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 expenses.find((expense) => {
                     if (expense.id == btn.getAttribute("data-id")) {
                         form.patchValues(expense);
+                        modal.onSave = () => {
+                            updateExpense(expense.id);
+                        };
                         modal.open();
                     }
                 });
@@ -86,6 +94,41 @@ document.addEventListener("DOMContentLoaded", () => {
                 },
                 COLORS
             );
+        });
+    };
+
+    const createExpense = () => {
+        if (!form.isValid()) {
+            Toast.show("error", "Bitte überprüfe deine Engaben.");
+            console.log(form.errors);
+            return;
+        }
+
+        HttpRequest.post("/api/expenses", form.toObj(), {
+            onSuccess: (response) => {
+                // TODO: add expense to dom
+                console.log(response);
+            },
+            onError: (error) => {
+                Toast.show("error", error.message);
+            },
+        });
+    };
+
+    const updateExpense = (id) => {
+        if (!form.isValid()) {
+            Toast.show("error", "Bitte überprüfe deine Engaben.");
+            return;
+        }
+
+        HttpRequest.put(`/api/expenses/${id}`, form.toObj(), {
+            onSuccess: (response) => {
+                // TODO: add expense to dom
+                console.log(response);
+            },
+            onError: (error) => {
+                Toast.show("error", error.message);
+            },
         });
     };
 

@@ -13,6 +13,13 @@ export class Form {
             email: (input, value) => {
                 return value.includes("@");
             },
+            number: (input, value) => {
+                if (typeof value != "string") {
+                    return false;
+                }
+
+                return !isNaN(value) && !isNaN(parseFloat(value));
+            },
             min: (input, value, min) => {
                 return value.length >= min;
             },
