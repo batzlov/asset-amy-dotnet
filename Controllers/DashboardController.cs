@@ -36,6 +36,7 @@ public class DashboardController : Controller
 
         var expenses = _expenseManager.GetAllForUser(userId);
         ViewBag.expenses = expenses;
+        ViewBag.expensesTotal = expenses.Sum(e => e.value);
         ViewBag.expensesJson = JsonConvert.SerializeObject(expenses);
 
         return View();

@@ -22,6 +22,11 @@ export function renderChart(ctx, data, config, colors) {
         type: config.chartType,
         data: chartData,
         options: {
+            elements: {
+                arc: {
+                    borderWidth: 0,
+                },
+            },
             responsive: config.responsive,
             plugins: {
                 legend: {

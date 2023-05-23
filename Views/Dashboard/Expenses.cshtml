@@ -29,7 +29,7 @@
                         <tbody class="expenses-container">
                             @foreach (var expense in ViewBag.expenses)
                             {
-                                <tr data-parent-of="@expense.id">
+                                <tr data-parent-of="@expense.id" class="hover">
                                     <th>
                                         @expense.id
                                     </th>
@@ -71,17 +71,17 @@
                                 </tr>
                             }
                         </tbody>
-                        @* <tfoot>
+                        <tfoot>
                             <tr>
-                                <th></th> 
-                                <th></th> 
-                                <th></th> 
-                                <th></th> 
+                                <td></td>
+                                <th>Gesamt:</th> 
+                                <th class="expenses-total">@ViewBag.expensesTotal</th>  
+                                <td></td>
                             </tr>
-                        </tfoot> *@
+                        </tfoot>
                     </table>
                 </div>
-                <div>
+                <div class="pt-6 2xl:pt-0">
                     <div class="card">
                         <div class="flex justify-end">
                             <select id="select-chart-type" class="select select-bordered w-full max-w-xs">

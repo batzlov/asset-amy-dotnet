@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let chart = null;
     let chartCanvas;
-    let chartType = "pie";
+    let chartType = CHART_TYPES.PIE;
 
     const init = () => {
         const template = document.getElementById("expense-modal");
@@ -61,16 +61,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // render chart
         chartCanvas = document.getElementById("expenses-chart");
-        renderChartElm(chartType);
+        renderExpenseChart(chartType);
 
         const selectChartType = document.getElementById("select-chart-type");
         selectChartType.addEventListener("change", (event) => {
             chartType = event.target.value;
-            renderChartElm(chartType);
+            renderExpenseChart(chartType);
         });
     };
 
-    const renderChartElm = (chartType) => {
+    const renderExpenseChart = (chartType) => {
         if (chart) {
             chart.destroy();
         }
@@ -107,9 +107,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 modal.close();
                 form.reset();
-                Toast.show("success", "Ausgabe wurde erstellt.");
+                Toast.show("success", "Ausgabe wurde erstellt");
 
-                renderChartElm(chartType);
+                renderExpenseChart(chartType);
+                updateExpenseTableFooter();
             },
             onError: (error) => {
                 Toast.show("error", error.message);
@@ -142,10 +143,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
         modal.setLoading(true);
         HttpRequest.put(`/api/expenses/${id}`, form.toObj(), {
-            onSuccess: (response) => {
-                // TODO: add expense to dom
-                console.log(response);
+            onSuccess: (updatedExpense) => {
                 modal.setLoading(false);
+
+                expenses = expenses.map((expense) => {
+                    if (expense.id == id) {
+                        return updatedExpense;
+                    }
+                    return expense;
+                });
+
+                const rowToUpdate = document.querySelector(
+                    `[data-parent-of="${id}"]`
+                );
+                rowToUpdate.replaceWith(renderExpenseRow(updatedExpense));
+                renderExpenseChart(chartType);
+                updateExpenseTableFooter();
+
+                Toast.show("success", "Ausgabe wurde geändert");
+                modal.close();
+                form.reset();
             },
             onError: (error) => {
                 Toast.show("error", error.message);
@@ -182,7 +199,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 expenses = expenses.filter((expense) => {
                     return expense.id != id;
                 });
-                renderChartElm(chartType);
+                renderExpenseChart(chartType);
+
+                updateExpenseTableFooter();
             },
             onError: (error) => {
                 confirmModal.setLoading(false);
@@ -194,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const renderExpenseRow = (expense) => {
         const row = elementFromString(`
-            <tr data-parent-of="${expense.id}">
+            <tr data-parent-of="${expense.id}" class="hover">
                 <th>
                     ${expense.id}
                 </th>
@@ -247,6 +266,15 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         return row;
+    };
+
+    const updateExpenseTableFooter = () => {
+        const total = expenses.reduce((acc, expense) => {
+            return acc + parseFloat(expense.value);
+        }, 0);
+
+        const totalElement = document.querySelector(".expenses-total");
+        totalElement.innerHTML = total;
     };
 
     init();
