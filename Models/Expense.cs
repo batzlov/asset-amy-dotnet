@@ -8,12 +8,10 @@ public partial class Expense
 {
     public int id { get; set; }
 
-    [Required(ErrorMessage = "Pflichtfeld")]
     public string name { get; set; } = null!;
 
     public string? description { get; set; }
 
-    [Required(ErrorMessage = "Pflichtfeld")]
     public double value { get; set; }
 
     public DateTime createdAt { get; set; }
@@ -33,7 +31,8 @@ public class CreateExpenseDto
     public string? description { get; set; }
 
     [Required(ErrorMessage = "Pflichtfeld")]
-    public double value { get; set; }
+    [Range(0, 9999999999999999.99)]
+    public double? value { get; set; }
 }
 
 public class UpdateExpenseDto

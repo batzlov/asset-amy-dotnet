@@ -53,4 +53,14 @@ export class Modal {
     close() {
         this.modalToggle.checked = false;
     }
+
+    setLoading(isLoading) {
+        const saveBtn = this.modal.querySelector("#save-btn");
+
+        if (isLoading) {
+            saveBtn.classList.add("loading");
+        } else {
+            saveBtn.classList.remove("loading");
+        }
+    }
 }

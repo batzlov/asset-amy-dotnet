@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using asset_amy.Models;
 using asset_amy.Managers;
 using Newtonsoft.Json;
@@ -31,7 +32,9 @@ public class DashboardController : Controller
     [Route("dashboard/expenses")]
     public IActionResult Expenses()
     {
-        var expenses = _expenseManager.GetAllForUser(1);
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+        var expenses = _expenseManager.GetAllForUser(userId);
         ViewBag.expenses = expenses;
         ViewBag.expensesJson = JsonConvert.SerializeObject(expenses);
 

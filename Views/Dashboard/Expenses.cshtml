@@ -16,8 +16,8 @@
             </div>
             <div class="divider"></div>
             <div class="grid grid-cols-1 2xl:grid-cols-2 xl:pt-6 gap-2">
-                <div class="overflow-y-hidden w-full">
-                    <table class="table w-full shadow">
+                <div class="w-full">
+                    <table class="table w-full">
                         <thead>
                             <tr>
                                 <th></th>
@@ -26,10 +26,10 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="expenses-container">
                             @foreach (var expense in ViewBag.expenses)
                             {
-                                <tr>
+                                <tr data-parent-of="@expense.id">
                                     <th>
                                         @expense.id
                                     </th>
@@ -42,7 +42,7 @@
                                     <td
                                         class="flex justify-end"
                                     >
-                                         <div class="dropdown dropdown-bottom dropdown-end ml-auto">
+                                        <div class="dropdown dropdown-bottom dropdown-end ml-auto">
                                             <label tabindex="0" class="btn btn-ghost btn-sm normal-case btn-square ">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="w-5">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"></path>

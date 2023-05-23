@@ -31,16 +31,16 @@ public class ApiExpenseController : ControllerBase
     [Route("api/expenses")]
     public IActionResult CreateExpense(CreateExpenseDto dto)
     {
-        var expense = new Expense();
-        expense.name = dto.name;
-        expense.value = dto.value;
-
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        expense.belongsToId = int.Parse(userId!);
-
         if (!ModelState.IsValid) {
             return BadRequest(new { ok = false, message = "Deine Angaben sind fehlerhaft." });
         }
+
+        var expense = new Expense();
+        expense.name = dto.name;
+        expense.value = dto.value!.Value;
+
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        expense.belongsToId = int.Parse(userId!);
 
         _expenseManager.Create(expense);
 
@@ -52,6 +52,7 @@ public class ApiExpenseController : ControllerBase
     public IActionResult GetExpenses()
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        _logger.LogInformation($"User {userId} requested expenses.");
         var expenses = _expenseManager.GetAllForUser(userId);
 
         return Ok(expenses);
