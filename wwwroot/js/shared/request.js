@@ -41,7 +41,7 @@ export class HttpRequest {
             });
     }
 
-    static async put(url, data) {
+    static async put(url, data, { onSuccess, onError } = {}) {
         const response = fetch(url, {
             method: "PUT",
             headers: {
@@ -71,15 +71,32 @@ export class HttpRequest {
             });
     }
 
-    static async delete(url) {
-        const response = await fetch(url, {
+    static async delete(url, { onSuccess, onError } = {}) {
+        const response = fetch(url, {
             method: "DELETE",
             headers: {
                 Bearer: "Bearer " + localStorage.getItem("token"),
                 "Content-Type": "application/json",
             },
-        });
+        })
+            .then(async (response) => {
+                if (response.status >= 400) {
+                    const json = await response.json();
+                    const errorMessage = json.message || response.statusText;
+                    throw new Error(errorMessage);
+                }
 
-        return response.json();
+                return response.json();
+            })
+            .then((json) => {
+                if (onSuccess) {
+                    onSuccess(json);
+                }
+            })
+            .catch((error) => {
+                if (onError) {
+                    onError(error);
+                }
+            });
     }
 }

@@ -1,25 +1,30 @@
 import { Form } from "../shared/form.js";
 import { Modal } from "../shared/modal.js";
 import { HttpRequest } from "../shared/request.js";
-import { elementFromString } from "./utils.js";
 import { Toast } from "../shared/toast.js";
 import { expenseSchema } from "../shared/schema.js";
-import { renderChart } from "./utils.js";
-import { COLORS, CHART_TYPES, EXPENSES } from "./constants.js";
+import { renderChart, elementFromString } from "../shared/utils.js";
+import { COLORS, CHART_TYPES } from "../shared/constants.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     let form;
     let expenses = [];
+
     let modal;
+    let confirmModal, confirmDeleteTemplate;
+
+    let chart = null;
+    let chartCanvas;
+    let chartType = "pie";
 
     const init = () => {
         const template = document.getElementById("expense-modal");
         modal = new Modal(template, {});
 
-        const confirmDeleteTemplate = document.getElementById(
+        confirmDeleteTemplate = document.getElementById(
             "confirm-delete-expense-modal"
         );
-        const confirmModal = new Modal(confirmDeleteTemplate, {
+        confirmModal = new Modal(confirmDeleteTemplate, {
             modalSelector: "#confirm-modal",
             modalToggleSelector: "#confirm-modal-toggle",
         });
@@ -39,16 +44,14 @@ document.addEventListener("DOMContentLoaded", () => {
             ".update-expense-btn"
         );
         for (let btn of updateExpenseBtns) {
-            btn.addEventListener("click", updateExpenseEventListener);
+            btn.addEventListener("click", updateExpenseEvent);
         }
 
         const deleteExpenseBtns = document.querySelectorAll(
             ".delete-expense-btn"
         );
         for (let btn of deleteExpenseBtns) {
-            btn.addEventListener("click", () => {
-                confirmModal.open();
-            });
+            btn.addEventListener("click", deleteExpenseEvent);
         }
 
         // load expenses from dom
@@ -57,36 +60,32 @@ document.addEventListener("DOMContentLoaded", () => {
         expensesElm.removeAttribute("data-expenses");
 
         // render chart
-        const expensesCanvas = document.getElementById("expenses-chart");
-        let chart = renderChart(
-            expensesCanvas.getContext("2d"),
+        chartCanvas = document.getElementById("expenses-chart");
+        renderChartElm(chartType);
+
+        const selectChartType = document.getElementById("select-chart-type");
+        selectChartType.addEventListener("change", (event) => {
+            chartType = event.target.value;
+            renderChartElm(chartType);
+        });
+    };
+
+    const renderChartElm = (chartType) => {
+        if (chart) {
+            chart.destroy();
+        }
+
+        chart = renderChart(
+            chartCanvas.getContext("2d"),
             expenses,
             {
                 datasetLabel: "Ausgaben",
-                chartType: CHART_TYPES.PIE,
+                chartType: CHART_TYPES[chartType.toUpperCase()],
                 legendPosition: "top",
                 chartTitle: "Ausgaben",
             },
             COLORS
         );
-
-        const selectChartType = document.getElementById("select-chart-type");
-        selectChartType.addEventListener("change", (event) => {
-            chart.destroy();
-
-            const chartType = event.target.value;
-            chart = renderChart(
-                expensesCanvas.getContext("2d"),
-                expenses,
-                {
-                    datasetLabel: "Ausgaben",
-                    chartType: CHART_TYPES[chartType.toUpperCase()],
-                    legendPosition: "top",
-                    chartTitle: "Ausgaben",
-                },
-                COLORS
-            );
-        });
     };
 
     const createExpense = () => {
@@ -109,11 +108,29 @@ document.addEventListener("DOMContentLoaded", () => {
                 modal.close();
                 form.reset();
                 Toast.show("success", "Ausgabe wurde erstellt.");
+
+                renderChartElm(chartType);
             },
             onError: (error) => {
                 Toast.show("error", error.message);
                 modal.setLoading(false);
             },
+        });
+    };
+
+    const updateExpenseEvent = (event) => {
+        let dataId =
+            event.target.getAttribute("data-id") ||
+            event.target.parentNode.getAttribute("data-id");
+
+        expenses.find((expense) => {
+            if (expense.id == dataId) {
+                form.patchValues(expense);
+                modal.onSave = () => {
+                    updateExpense(expense.id);
+                };
+                modal.open();
+            }
         });
     };
 
@@ -137,31 +154,42 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    const updateExpenseEventListener = (event) => {
+    const deleteExpenseEvent = (event) => {
         let dataId =
             event.target.getAttribute("data-id") ||
             event.target.parentNode.getAttribute("data-id");
 
-        expenses.find((expense) => {
-            if (expense.id == dataId) {
-                form.patchValues(expense);
-                modal.onSave = () => {
-                    updateExpense(expense.id);
-                };
-                modal.open();
-            }
-        });
+        confirmModal.onSave = () => {
+            deleteExpense(dataId);
+        };
+        confirmModal.open();
     };
 
-    const deleteExpenseEventListener = (event) => {
-        let dataId =
-            event.target.getAttribute("data-id") ||
-            event.target.parentNode.getAttribute("data-id");
+    const deleteExpense = (id) => {
+        confirmModal.setLoading(true);
+        HttpRequest.delete(`/api/expenses/${id}`, {
+            onSuccess: (response) => {
+                confirmModal.setLoading(false);
 
-        // TODO: send request to delete expense
+                const rowToDelete = document.querySelector(
+                    `[data-parent-of="${id}"]`
+                );
+                rowToDelete.remove();
 
-        rowToDelete = document.querySelector(`[data-parent-of="${dataId}"]`);
-        rowToDelete.remove();
+                confirmModal.close();
+                Toast.show("success", "Die Ausgabe wurde gelöscht");
+
+                expenses = expenses.filter((expense) => {
+                    return expense.id != id;
+                });
+                renderChartElm(chartType);
+            },
+            onError: (error) => {
+                confirmModal.setLoading(false);
+
+                Toast.show("error", error.message);
+            },
+        });
     };
 
     const renderExpenseRow = (expense) => {
@@ -210,12 +238,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         row.querySelector(".update-expense-btn").addEventListener(
             "click",
-            updateExpenseEventListener
+            updateExpenseEvent
         );
 
         row.querySelector(".delete-expense-btn").addEventListener(
             "click",
-            deleteExpenseEventListener
+            deleteExpenseEvent
         );
 
         return row;

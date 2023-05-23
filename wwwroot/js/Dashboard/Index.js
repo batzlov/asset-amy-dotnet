@@ -4,8 +4,8 @@ import {
     ASSETS,
     COLORS,
     CHART_TYPES,
-} from "../dashboard/constants.js";
-import { renderChart } from "../dashboard/utils.js";
+} from "../shared/constants.js";
+import { renderChart } from "../shared/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     var revenuesCanvas = null;

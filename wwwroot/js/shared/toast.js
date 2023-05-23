@@ -1,4 +1,4 @@
-import { elementFromString } from "../dashboard/utils.js";
+import { elementFromString } from "./utils.js";
 
 export class Toast {
     static containerSelector = ".toast-container";
