@@ -158,6 +158,8 @@ document.addEventListener("DOMContentLoaded", () => {
             event.target.getAttribute("data-id") ||
             event.target.parentNode.getAttribute("data-id");
 
+        // TODO: send request to delete expense
+
         rowToDelete = document.querySelector(`[data-parent-of="${dataId}"]`);
         rowToDelete.remove();
     };
