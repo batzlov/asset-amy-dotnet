@@ -6,6 +6,14 @@ svg {
     /* height: 0px; */
 }
 
+/*
+    increase z index of toast container to make sure it is always on top, even
+    if a modal is open
+*/
+.toast-container {
+    z-index: 1000;
+}
+
 .auth-layout-container {
     min-height: calc(100vh - 48px);
     padding-bottom: 48px;

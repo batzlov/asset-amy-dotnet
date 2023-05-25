@@ -37,7 +37,7 @@
                                         @expense.name
                                     </td>
                                     <td>
-                                        @expense.value
+                                        @expense.value.ToString("C")
                                     </td>
                                     <td
                                         class="flex justify-end"
@@ -75,7 +75,7 @@
                             <tr>
                                 <td></td>
                                 <th>Gesamt:</th> 
-                                <th class="expenses-total">@ViewBag.expensesTotal</th>  
+                                <th class="expenses-total">@ViewBag.expensesTotal.ToString("C")</th>  
                                 <td></td>
                             </tr>
                         </tfoot>
