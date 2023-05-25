@@ -193,6 +193,8 @@ document.addEventListener("DOMContentLoaded", () => {
         confirmModal.onSave = () => {
             deleteExpense(dataId);
         };
+        confirmModal.modal.querySelector("#expense-title").innerText =
+            expenses.find((expense) => expense.id == dataId).name;
         confirmModal.open();
     };
 
