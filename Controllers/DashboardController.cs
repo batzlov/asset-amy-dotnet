@@ -65,12 +65,26 @@ public class DashboardController : Controller
     [Route("dashboard/revenues")]
     public IActionResult Revenues()
     {
+        var userId = getCurrentUserId();
+
+        var revenues = _revenueManager.GetAllForUser(userId);
+        ViewBag.revenues = revenues;
+        ViewBag.revenuesTotal = revenues.Sum(r => r.value);
+        ViewBag.revenuesJson = JsonConvert.SerializeObject(revenues);
+
         return View();
     }
 
     [Route("dashboard/asset-allocation")]
     public IActionResult AssetAllocation()
     {
+        var userId = getCurrentUserId();
+
+        var assets = _assetManager.GetAllForUser(userId);
+        ViewBag.assets = assets;
+        ViewBag.assetsTotal = assets.Sum(a => a.value);
+        ViewBag.assetsJson = JsonConvert.SerializeObject(assets);
+
         return View();
     }
 

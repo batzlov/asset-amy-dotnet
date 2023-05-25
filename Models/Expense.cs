@@ -37,9 +37,12 @@ public class CreateExpenseDto
 
 public class UpdateExpenseDto
 {
+    [Required(ErrorMessage = "Pflichtfeld")]
     public string name { get; set; } = null!;
 
     public string? description { get; set; }
 
-    public double value { get; set; }
+    [Required(ErrorMessage = "Pflichtfeld")]
+    [Range(0, 9999999999999999.99)]
+    public double? value { get; set; }
 }

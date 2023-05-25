@@ -77,7 +77,7 @@ public class ApiExpenseController : ControllerBase
         }
 
         expense.name = dto.name;
-        expense.value = dto.value;
+        expense.value = dto.value.Value;
 
         _expenseManager.Update(expense);
 
