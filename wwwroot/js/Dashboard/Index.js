@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
             REVENUES,
             {
                 datasetLabel: "Einnahmen",
-                chartType: CHART_TYPES.PIE,
+                chartType: CHART_TYPES.BAR,
                 legendPosition: "top",
                 chartTitle: "Einnahmen",
             },
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
             EXPENSES,
             {
                 datasetLabel: "Ausgaben",
-                chartType: CHART_TYPES.PIE,
+                chartType: CHART_TYPES.BAR,
                 legendPosition: "top",
                 chartTitle: "Ausgaben",
             },
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ASSETS,
             {
                 datasetLabel: "Asset Allocation",
-                chartType: CHART_TYPES.PIE,
+                chartType: CHART_TYPES.BAR,
                 legendPosition: "top",
                 chartTitle: "Asset Allocation",
             },
