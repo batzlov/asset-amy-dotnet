@@ -45,7 +45,7 @@
                     @Html.Partial("~/Views/Shared/Icons/BankNotes.cshtml", "w-10 h-10")
                 </div>
                 <div class="stat-title">Einnahmen</div>
-                <div class="stat-value text-primary">935,50</div>
+                <div class="stat-value text-primary">@ViewBag.revenuesTotal</div>
                 <div class="stat-desc">Einnahmen in €</div>
             </div>
         </div>
@@ -55,7 +55,7 @@
                     @Html.Partial("~/Views/Shared/Icons/CreditCard.cshtml", "w-10 h-10")
                 </div>
                 <div class="stat-title">Ausgaben</div>
-                <div class="stat-value text-primary">900,00</div>
+                <div class="stat-value text-primary">@ViewBag.expensesTotal</div>
                 <div class="stat-desc">Ausgaben in €</div>
             </div>
         </div>
@@ -65,7 +65,7 @@
                     @Html.Partial("~/Views/Shared/Icons/ChartPie.cshtml", "w-10 h-10")
                 </div>
                 <div class="stat-title">Asset Allocation</div>
-                <div class="stat-value text-primary">15.631,00</div>
+                <div class="stat-value text-primary">@ViewBag.assetsTotal</div>
                 <div class="stat-desc">Portfoliowert in €</div>
             </div>
         </div>
@@ -75,21 +75,21 @@
         <div>
             <div class="card bg-base-100 shadow-xl">
                 <div class="card-body">
-                    <canvas id="revenues-chart"></canvas>
+                    <canvas id="revenues-chart" data-revenues="@ViewBag.revenuesJson"></canvas>
                 </div>
             </div>
         </div>
         <div>
             <div class="card bg-base-100 shadow-xl">
                 <div class="card-body">
-                    <canvas id="expenses-chart"></canvas>
+                    <canvas id="expenses-chart" data-expenses="@ViewBag.expensesJson"></canvas>
                 </div>
             </div>
         </div>
         <div>
             <div class="card bg-base-100 shadow-xl">
                 <div class="card-body">
-                    <canvas id="asset-allocation-chart"></canvas>
+                    <canvas id="asset-allocation-chart" data-assets="@ViewBag.assetsJson"></canvas>
                 </div>
             </div>
         </div>
