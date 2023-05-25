@@ -2,6 +2,13 @@ export function sumNumberArray(array) {
     return array.reduce((a, b) => a + b, 0);
 }
 
+export function formatCurrency(value) {
+    return value.toLocaleString("de-DE", {
+        style: "currency",
+        currency: "EUR",
+    });
+}
+
 export function renderChart(ctx, data, config, colors) {
     const chartData = {
         labels: data.map((entry) => {

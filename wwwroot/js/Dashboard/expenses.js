@@ -3,7 +3,11 @@ import { Modal } from "../shared/modal.js";
 import { HttpRequest } from "../shared/request.js";
 import { Toast } from "../shared/toast.js";
 import { expenseSchema } from "../shared/schema.js";
-import { renderChart, elementFromString } from "../shared/utils.js";
+import {
+    renderChart,
+    elementFromString,
+    formatCurrency,
+} from "../shared/utils.js";
 import { COLORS, CHART_TYPES } from "../shared/constants.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -98,8 +102,18 @@ document.addEventListener("DOMContentLoaded", () => {
         HttpRequest.post("/api/expenses", form.toObj(), {
             onSuccess: (expense) => {
                 modal.setLoading(false);
-
                 expenses.push(expense);
+
+                // if it was the first created expense, hide the alert and show main content
+                if (expenses.length == 1) {
+                    document
+                        .getElementById("no-expenses-alert")
+                        .classList.add("hidden");
+                    document
+                        .getElementById("expenses-container")
+                        .classList.remove("hidden");
+                }
+
                 const expensesContainer = document.querySelector(
                     ".expenses-container"
                 );
@@ -199,6 +213,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 expenses = expenses.filter((expense) => {
                     return expense.id != id;
                 });
+
+                // if there are no more expenses, show the alert and hide main content
+                if (expenses.length == 0) {
+                    document
+                        .getElementById("no-expenses-alert")
+                        .classList.remove("hidden");
+                    document
+                        .getElementById("expenses-container")
+                        .classList.add("hidden");
+
+                    return;
+                }
+
                 renderExpenseChart(chartType);
 
                 updateExpenseTableFooter();
@@ -221,7 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     ${expense.name}
                 </td>
                 <td>
-                    ${expense.value}
+                    ${formatCurrency(expense.value)}
                 </td>
                 <td
                     class="flex justify-end"
