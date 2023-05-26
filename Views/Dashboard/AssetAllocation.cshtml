@@ -2,3 +2,153 @@
     Layout = "Layouts/_DashboardLayout";
     ViewData["Title"] = "Asset Allocation";
 }
+
+<div class="p-6" data-assets="@ViewBag.assetsJson">
+    <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+            <div class="text-xl font-semibold inline-block">
+                Asset Allocation
+                <div class="inline-block float-right">
+                    <div class="inline-block float-right">
+                        <button id="create-asset-btn" class="btn btn-primary px-6 btn-sm">hinzufügen</button>
+                    </div>
+                </div>
+            </div>
+            <div class="divider"></div>
+            @if(ViewBag.assets.Length == 0)
+            {
+                <div id="no-assets-alert" class="alert alert-info">
+                    <div class="flex-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <label>Es wurden noch keine Asset-Positionen hinzugefügt.</label>
+                    </div>
+                </div>
+            }
+            <div
+                id="assets-container"
+                @if(ViewBag.assets.Length == 0) {
+                    @: class="grid grid-cols-1 2xl:grid-cols-2 xl:pt-6 gap-2 hidden"
+                } else {
+                    @: class="grid grid-cols-1 2xl:grid-cols-2 xl:pt-6 gap-2"
+                } 
+            >
+                <div class="w-full">
+                    <table class="table w-full">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Name der Asset-Position</th>
+                                <th>Höhe der Asset-Position</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody class="assets-container">
+                            @foreach (var asset in ViewBag.assets)
+                            {
+                                <tr data-parent-of="@asset.id" class="hover">
+                                    <th>
+                                        @asset.id
+                                    </th>
+                                    <td>
+                                        @asset.name
+                                    </td>
+                                    <td>
+                                        @asset.value.ToString("C")
+                                    </td>
+                                    <td
+                                        class="flex justify-end"
+                                    >
+                                        <div class="dropdown dropdown-bottom dropdown-end ml-auto">
+                                            <label tabindex="0" class="btn btn-ghost btn-sm normal-case btn-square ">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="w-5">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"></path>
+                                                </svg>
+                                            </label>
+                                            <ul tabindex="0" class="dropdown-content menu menu-compact  p-2 shadow bg-base-100 rounded-box w-52">
+                                                <li
+                                                    class="update-asset-btn"
+                                                    data-id="@asset.id"
+                                                >
+                                                    <a>
+                                                        bearbeiten
+                                                    </a>
+                                                </li>
+                                                <li
+                                                    class="delete-asset-btn"
+                                                    data-id="@asset.id"
+                                                >
+                                                    <a>
+                                                        löschen
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div> 
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td></td>
+                                <th>Gesamt:</th> 
+                                <th class="assets-total">@ViewBag.assetsTotal.ToString("C")</th>  
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="pt-6 2xl:pt-0">
+                    <div class="card">
+                        <div class="flex justify-end">
+                            <select id="select-chart-type" class="select select-bordered w-full max-w-xs">
+                                <option value="pie">Kuchendiagramm</option>
+                                <option value="line">Liniendiagramm</option>
+                                <option value="bar">Balkendiagramm</option>
+                            </select>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="assets-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<template id="asset-modal">
+    <h3 class="font-bold text-xl">Asset-Position hinzufügen</h3>
+    <div class="divider my-1"></div>
+    <form>
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">Name der Asset-Position</span>
+            </label>
+            <input name="name" type="text" placeholder="Einnahme" class="input input-bordered">
+            <label class="label">
+                <span class="label-text"></span>
+            </label>
+        </div>
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">Höhe der Asset-Position</span>
+            </label>
+            <input name="value" type="text" placeholder="Einnahme" class="input input-bordered">
+            <label class="label">
+                <span class="label-text"></span>
+            </label>
+        </div>
+    </form>
+</template>
+
+<template id="confirm-delete-asset-modal">
+    <h3 class="font-bold text-xl">Bist du dir sicher?</h3>
+    <div class="divider my-1"></div>
+    <div>
+        Bist du dir sicher dass du die Asset-Position <span id="asset-title" class="font-bold"></span> löschen möchtest?
+    </div>
+</template>
+
+<script src="~/js/dashboard/assets.js" type="module" asp-append-version="true"></script>

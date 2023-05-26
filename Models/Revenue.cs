@@ -10,7 +10,7 @@ public partial class Revenue
 
     public string name { get; set; } = null!;
 
-    public string description { get; set; } = null!;
+    public string? description { get; set; }
 
     public double value { get; set; }
 
@@ -28,7 +28,7 @@ public class CreateRevenueDto
     [Required(ErrorMessage = "Pflichtfeld")]
     public string name { get; set; } = null!;
 
-    public string description { get; set; } = null!;
+    public string? description { get; set; }
 
     [Required(ErrorMessage = "Pflichtfeld")]
     [Range(0, 9999999999999999.99)]
@@ -40,7 +40,7 @@ public class UpdateRevenueDto
     [Required(ErrorMessage = "Pflichtfeld")]
     public string name { get; set; } = null!;
 
-    public string description { get; set; } = null!;
+    public string? description { get; set; }
 
     [Required(ErrorMessage = "Pflichtfeld")]
     [Range(0, 9999999999999999.99)]

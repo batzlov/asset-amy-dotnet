@@ -59,7 +59,49 @@ public class ApiAssetController : ControllerBase
             return BadRequest(new { ok = false, message = "Deine Angaben sind fehlerhaft." });
         }
 
-        return Ok();
+        var asset = new Asset();
+        asset.name = dto.name;
+        asset.value = dto.value!.Value;
+        asset.belongsToId = getCurrentUserId();
+
+        _assetManager.Create(asset);
+
+        return Ok(asset);
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult UpdateAsset(int id, UpdateAssetDto dto)
+    {
+        if (!ModelState.IsValid) {
+            return BadRequest(new { ok = false, message = "Deine Angaben sind fehlerhaft." });
+        }
+
+        var asset = _assetManager.GetById(id);
+
+        if (asset == null || asset.belongsToId != getCurrentUserId()) {
+            return NotFound(new { ok = false, message = "Vermögenswert nicht gefunden." });
+        }
+
+        asset.name = dto.name;
+        asset.value = dto.value!.Value;
+
+        _assetManager.Update(asset);
+
+        return Ok(asset);
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult DeleteAsset(int id)
+    {
+        var asset = _assetManager.GetById(id);
+
+        if (asset == null || asset.belongsToId != getCurrentUserId()) {
+            return NotFound(new { ok = false, message = "Vermögenswert nicht gefunden." });
+        }
+
+        _assetManager.Delete(asset);
+
+        return Ok(new { ok = true, message = "Vermögenswert wurde gelöscht." });
     }
 
     private int getCurrentUserId()

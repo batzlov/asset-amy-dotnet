@@ -25,7 +25,7 @@ model User {
 model Revenue {
     id              Int      @id @default(autoincrement())
     name            String   @db.VarChar(100)
-    description     String   @db.VarChar(1000)
+    description     String?  @db.VarChar(1000)
     value           Float
     createdAt       DateTime @default(now())
     updatedAt       DateTime @updatedAt
@@ -37,7 +37,7 @@ model Revenue {
 model Expense {
     id              Int      @id @default(autoincrement())
     name            String   @db.VarChar(100)
-    description     String   @db.VarChar(1000)
+    description     String?  @db.VarChar(1000)
     value           Float
     createdAt       DateTime @default(now())
     updatedAt       DateTime @updatedAt
@@ -50,7 +50,7 @@ model Asset {
     id              Int      @id @default(autoincrement())
     name            String   @db.VarChar(100)
     type            AssetType
-    description     String   @db.VarChar(1000)
+    description     String?  @db.VarChar(1000)
     value           Float
     createdAt       DateTime @default(now())
     updatedAt       DateTime @updatedAt
