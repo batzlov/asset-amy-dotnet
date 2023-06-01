@@ -1,4 +1,54 @@
 /*
+    landign page styles
+*/
+header {
+    z-index: 1;
+    position: relative;
+}
+
+.hero {
+    background-image: url(/assets/blob-hero.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top right;
+    min-height: 60vh;
+    margin-top: -64px;
+    z-index: -1;
+}
+
+.spacer {
+    aspect-ratio: 960/150;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.layer-top {
+    margin-top: -75px;
+    background-image: url(/assets/waves-spacer-top.svg);
+}
+
+.layer-bottom {
+    margin-top: -75px;
+    background-image: url(/assets/waves-spacer-bottom.svg);
+}
+
+.flip {
+    transform: rotate(180deg);
+}
+
+.btn-white {
+    border-color: #fff;
+    color: #fff;
+}
+
+.btn-white:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+/*
     fix to prevent large flashing of icons when normal css still loads
 */
 svg {

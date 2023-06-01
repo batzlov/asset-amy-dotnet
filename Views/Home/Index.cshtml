@@ -1,208 +1,267 @@
-﻿@{
-    Layout = "Layouts/_Layout";
-    ViewData["Title"] = "Übersicht";
+@{
+    Layout = "Layouts/_LandingLayout";
+    ViewData["Title"] = "Willkommen";
 }
 
-<div class="hero bg-base-200">
-        <section class="hero-content grid grid-cols-1 lg:grid-cols-2 gap-4 py-20 px-5">
+<section class="hero">
+    <div class="hero-content max-w-screen-2xl grid grid-cols-1 lg:grid-cols-5 gap-x-14 py-20 px-10">
+        <div class="lg:col-span-3">
+            <div class="carousel w-full rounded-box overflow-visible">
+                <div class="carousel-item relative w-full">
+                    <img src="~/assets/screenshots/aa-screenshot-3.png" class="h-auto max-w-full preview-image" />
+                </div>
+            </div>
+            <div class="flex justify-center w-full py-2 gap-2">
+                <a class="btn btn-ghost btn-xs change-preview-image btn-active" data-switch-to-image="1">1</a>
+                <a class="btn btn-ghost btn-xs change-preview-image" data-switch-to-image="2">2</a>
+                <a class="btn btn-ghost btn-xs change-preview-image" data-switch-to-image="3">3</a>
+                <a class="btn btn-ghost btn-xs change-preview-image" data-switch-to-image="4">4</a>
+                <a class="btn btn-ghost btn-xs change-preview-image" data-switch-to-image="5">5</a>
+            </div>
+        </div>
+        <div class="pt-10 lg:pt-0 lg:order-first text-center lg:text-start lg:col-span-2">
+            <h1 class="text-4xl">
+                Deine Finanzen und du,
+            </h1>
+            <h2 class="text-4xl">
+                ein Dream-Team wie aus dem Bilderbuch.
+            </h2>
+            <p class="py-6 text-xl">
+                Mit Asset Amy hast du deine Finanzen immer im Blick. Egal ob du deine Ausgaben tracken, deine
+                Einnahmen verwalten oder deine Finanzen planen möchtest, Asset Amy ist für dich da.
+            </p>
             <div>
-                <h1 class="text-4xl">
-                    Deine Finanzen und du,
-                </h1>
-                <h2 class="text-4xl">
-                    ein Dream-Team wie aus dem Bilderbuch.
-                </h2>
-                <p class="py-6 text-xl">
-                    Mit Asset Amy hast du deine Finanzen immer im Blick. Egal ob du deine Ausgaben tracken, deine
-                    Einnahmen verwalten oder deine Finanzen planen möchtest, Asset Amy ist für dich da.
-                </p>
-                <button class="btn btn-primary">Jetzt starten</button>
-                <button class="btn btn-outline btn-primary">Du hast noch kein Konto?</button>
+                <a class="btn btn-primary mt-2 btn-wide"  asp-controller="Auth" asp-action="SignIn">Jetzt starten</a>
+                <a class="btn btn-outline btn-primary mt-2 btn-wide"  asp-controller="Auth" asp-action="SignUp">Du hast noch kein Konto?</a>
             </div>
-            <div class="hidden lg:flex">
-                <img class="h-auto max-w-full shadow-lg" src="~/assets/app-screenshot.png" alt="">
-            </div>
-        </section>
+        </div>
     </div>
+</section>
 
-    <section class="py-20 px-5">
-        <div class="container mx-auto">
-            <h2 class="pb-6 text-4xl text-center">Was ich dir biete</h2>
-            <p class="pb-6 text-xl text-center mx-auto px-5 max-w-5xl">
-                Finanz-Software gibt es wie Sand am Meer. Die
-                Funktionen die
-                wir dir mit
-                Asset Amy bieten
-                hat
-                so allerdings noch
-                niemand. Erfahre auf einen Blick was wir dir alles bieten.
+<section class="bg-base-200 py-20">
+    <div class="container py-20 px-10 mx-auto max-w-5xl grid grid-cols-1 lg:grid-cols-2 py-20">
+        <div class="grid grid-flow-col gap-5 justify-center text-center lg:justify-start auto-cols-max mx-auto">
+            <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+                <span class="countdown font-mono text-5xl mx-auto">
+                    <span class="counter-days" style="--value:0;"></span>
+                </span>
+                Tage
+            </div>
+            <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+                <span class="countdown font-mono text-5xl mx-auto">
+                    <span class="counter-hours" style="--value:0;"></span>
+                </span>
+                Stunden
+            </div>
+            <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+                <span class="countdown font-mono text-5xl mx-auto">
+                    <span class="counter-minutes" style="--value:0;"></span>
+                </span>
+                Minuten
+            </div>
+            <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+                <span class="countdown font-mono text-5xl mx-auto">
+                    <span class="counter-seconds" style="--value:0;"></span>
+                </span>
+                Sekunden
+            </div>
+        </div>
+        <div class="m-auto pt-10 lg:pt-0 text-center lg:text-start">
+            <h3 class="text-4xl">
+                Bereit? 🚀
+            </h3>
+            <h4 class="text-xl">
+                Asset Amy ist bald für dich da!
+            </h4>
+        </div>
+    </div>
+</section>
+
+<section class="spacer layer-top"></section>
+
+<section class="py-20 px-10 bg-primary text-primary-content">
+    <div class="container mx-auto">
+        <h2 class="pb-6 text-4xl text-center">Was ich dir biete</h2>
+        <p class="pb-6 text-xl text-center mx-auto px-5 max-w-5xl">
+            Finanz-Software gibt es wie Sand am Meer. Die
+            Funktionen die
+            wir dir mit
+            Asset Amy bieten
+            hat
+            so allerdings noch
+            niemand. Erfahre auf einen Blick was wir dir alles bieten.
+        </p>
+    </div>
+    <div
+        class="pb-20 container max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 content-center">
+        <div class="flex flex-row justify-center py-3">
+            <div class="px-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
+                    stroke="#36d399" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                </svg>
+            </div>
+            <div class="px-2">
+                <p class="font-bold">
+                    Tracken von Ausgaben
+                </p>
+                <p>
+                    Du hast die Möglichkeit deine Ausgaben zu tracken, zu bearbeiten und zu löschen
+                </p>
+            </div>
+        </div>
+        <div class="flex flex-row justify-center py-3">
+            <div class="px-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
+                    stroke="#36d399" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                </svg>
+            </div>
+            <div class="px-2">
+                <p class="font-bold">
+                    Übersicht über Ausgaben
+                </p>
+                <p>
+                    Du kannst dir verschiedene Arten von Diagrammen anzeigen lassen, um deine Ausgaben zu
+                    überwachen
+                </p>
+            </div>
+        </div>
+        <div class="flex flex-row justify-center py-3">
+            <div class="px-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
+                    stroke="#36d399" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                </svg>
+            </div>
+            <div class="px-2">
+                <p class="font-bold">
+                    Tracken von Einnahmen
+                </p>
+                <p>
+                    Du hast die Möglichkeit deine Einnahmen zu tracken, zu bearbeiten und zu löschen
+                </p>
+            </div>
+        </div>
+        <div class="flex flex-row justify-center py-3">
+            <div class="px-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
+                    stroke="#36d399" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                </svg>
+            </div>
+            <div class="px-2">
+                <p class="font-bold">
+                    Übersicht über Einnahmen
+                </p>
+                <p>
+                    Du kannst dir verschiedene Arten von Diagrammen anzeigen lassen, um deine Einnahmen zu
+                    überwachen
+                </p>
+            </div>
+        </div>
+        <div class="flex flex-row justify-center py-3">
+            <div class="px-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
+                    stroke="#36d399" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                </svg>
+            </div>
+            <div class="px-2">
+                <p class="font-bold">
+                    Tracken von Vermögenswerten
+                </p>
+                <p>
+                    Du hast die Möglichkeit deine Vermögenswerte zu tracken, zu bearbeiten und zu löschen
+                </p>
+            </div>
+        </div>
+        <div class="flex flex-row justify-center py-3">
+            <div class="px-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
+                    stroke="#36d399" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                </svg>
+            </div>
+            <div class="px-2">
+                <p class="font-bold">
+                    Übersicht über Vermögenswerte
+                </p>
+                <p>
+                    Du kannst dir verschiedene Arten von Diagrammen anzeigen lassen, um deine Vermögenswerte zu
+                    überwachen
+                </p>
+            </div>
+        </div>
+        <div class="flex flex-row justify-center py-3">
+            <div class="px-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
+                    stroke="#36d399" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                </svg>
+            </div>
+            <div class="px-2">
+                <p class="font-bold">
+                    Lorem ipsum dolor sit amet
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
+                </p>
+            </div>
+        </div>
+        <div class="flex flex-row justify-center py-3">
+            <div class="px-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
+                    stroke="#36d399" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                </svg>
+            </div>
+            <div class="px-2">
+                <p class="font-bold">
+                    Lorem ipsum dolor sit amet
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="spacer layer-bottom"></section>
+
+<section class="pb-20 px-10">
+    <div class="container max-w-7xl mx-auto text-center">
+        <h2 class="text-4xl pb-6">
+            Was ich dir sagen möchte
+        </h2>
+        <div class="text-xl pb-6">
+            Es ist wichtig, sich Gedanken über seine Finanzen zu
+            machen, um ein finanziell stabiles und glückliches Leben zu führen. Wenn
+            man keine Kontrolle über seine Finanzen hat, kann das zu
+            Schulden, finanzieller Instabilität und Stress führen.
+            Durch eine regelmäßige Überprüfung der Einnahmen und
+            Ausgaben kann man ein besseres Verständnis dafür
+            entwickeln, wo das eigene Geld hinfließt und wie man es am
+            effektivsten einsetzen kann. Das kann dabei helfen,
+            Schulden abzubauen, Geld zu sparen und langfristig
+            finanzielle Ziele zu erreichen, wie zum Beispiel die
+            eigene Altersvorsorge zu sichern oder eine größere
+            Anschaffung zu tätigen. Kurz gesagt, sich Gedanken über
+            seine Finanzen zu machen, ist der erste Schritt auf dem
+            Weg zu einem finanziell gesunden Leben.
+        </div>
+        <div class="avatar">
+            <div class="w-24 rounded-full">
+                <img src="~/assets/avatar.jpg" />
+            </div>
+        </div>
+        <div class="pt-2">
+            <p class="font-bold">
+                Robert Ackermann
+            </p>
+            <p class="text-primary">
+                CEO & Finance Lover
             </p>
         </div>
-        <div
-            class="container max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 content-center">
-            <div class="flex flex-row justify-center py-3">
-                <div class="px-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
-                        stroke="green" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                    </svg>
-                </div>
-                <div class="px-2">
-                    <p class="font-bold">
-                        Lorem ipsum dolor sit amet
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
-                    </p>
-                </div>
-            </div>
-            <div class="flex flex-row justify-center py-3">
-                <div class="px-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
-                        stroke="green" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                    </svg>
-                </div>
-                <div class="px-2">
-                    <p class="font-bold">
-                        Lorem ipsum dolor sit amet
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
-                    </p>
-                </div>
-            </div>
-            <div class="flex flex-row justify-center py-3">
-                <div class="px-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
-                        stroke="green" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                    </svg>
-                </div>
-                <div class="px-2">
-                    <p class="font-bold">
-                        Lorem ipsum dolor sit amet
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
-                    </p>
-                </div>
-            </div>
-            <div class="flex flex-row justify-center py-3">
-                <div class="px-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
-                        stroke="green" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                    </svg>
-                </div>
-                <div class="px-2">
-                    <p class="font-bold">
-                        Lorem ipsum dolor sit amet
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
-                    </p>
-                </div>
-            </div>
-            <div class="flex flex-row justify-center py-3">
-                <div class="px-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
-                        stroke="green" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                    </svg>
-                </div>
-                <div class="px-2">
-                    <p class="font-bold">
-                        Lorem ipsum dolor sit amet
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
-                    </p>
-                </div>
-            </div>
-            <div class="flex flex-row justify-center py-3">
-                <div class="px-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
-                        stroke="green" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                    </svg>
-                </div>
-                <div class="px-2">
-                    <p class="font-bold">
-                        Lorem ipsum dolor sit amet
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
-                    </p>
-                </div>
-            </div>
-            <div class="flex flex-row justify-center py-3">
-                <div class="px-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
-                        stroke="green" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                    </svg>
-                </div>
-                <div class="px-2">
-                    <p class="font-bold">
-                        Lorem ipsum dolor sit amet
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
-                    </p>
-                </div>
-            </div>
-            <div class="flex flex-row justify-center py-3">
-                <div class="px-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
-                        stroke="green" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                    </svg>
-                </div>
-                <div class="px-2">
-                    <p class="font-bold">
-                        Lorem ipsum dolor sit amet
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-20 bg-base-200 px-5">
-        <div class="container max-w-7xl mx-auto text-center">
-            <h2 class="text-4xl pb-6">
-                Was ich dir sagen möchte
-            </h2>
-            <div class="text-xl pb-6">
-                Es ist wichtig, sich Gedanken über seine Finanzen zu
-                machen, um ein finanziell stabiles Leben zu führen. Wenn
-                man keine Kontrolle über seine Finanzen hat, kann das zu
-                Schulden, finanzieller Instabilität und Stress führen.
-                Durch eine regelmäßige Überprüfung der Einnahmen und
-                Ausgaben kann man ein besseres Verständnis dafür
-                entwickeln, wo das Geld ausgeht und wie man es am
-                effektivsten einsetzen kann. Das kann dabei helfen,
-                Schulden abzubauen, Geld zu sparen und langfristig
-                finanzielle Ziele zu erreichen, wie zum Beispiel die
-                eigene Altersvorsorge zu sichern oder eine größere
-                Anschaffung zu tätigen. Kurz gesagt, sich Gedanken über
-                seine Finanzen zu machen, ist der erste Schritt auf dem
-                Weg zu einem finanziell gesunden Leben.
-            </div>
-            <div class="avatar">
-                <div class="w-24 rounded-full">
-                    <img src="~/assets/avatar.jpg" />
-                </div>
-            </div>
-            <div class="pt-2">
-                <p class="font-bold">
-                    Robert Ackermann
-                </p>
-                <p class="text-primary">
-                    CEO & Finance Lover
-                </p>
-            </div>
-    </section>
+</section>
