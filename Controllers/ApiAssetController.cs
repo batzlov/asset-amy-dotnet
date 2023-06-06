@@ -62,6 +62,7 @@ public class ApiAssetController : ControllerBase
         var asset = new Asset();
         asset.name = dto.name;
         asset.value = dto.value!.Value;
+        asset.type = dto.type;
         asset.belongsToId = getCurrentUserId();
 
         _assetManager.Create(asset);

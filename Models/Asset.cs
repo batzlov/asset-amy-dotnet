@@ -12,7 +12,7 @@ public partial class Asset
 
     public string type { get; set; } = null!;
 
-    public string description { get; set; } = null!;
+    public string? description { get; set; } 
 
     public double value { get; set; }
 
@@ -33,7 +33,7 @@ public class CreateAssetDto
     [Required(ErrorMessage = "Pflichtfeld")]
     public string type { get; set; } = null!;
 
-    public string description { get; set; } = null!;
+    public string? description { get; set; } 
 
     [Required(ErrorMessage = "Pflichtfeld")]
     [Range(0, 9999999999999999.99)]
@@ -48,7 +48,7 @@ public class UpdateAssetDto
     [Required(ErrorMessage = "Pflichtfeld")]
     public string type { get; set; } = null!;
 
-    public string description { get; set; } = null!;
+    public string? description { get; set; } 
 
     [Required(ErrorMessage = "Pflichtfeld")]
     [Range(0, 9999999999999999.99)]

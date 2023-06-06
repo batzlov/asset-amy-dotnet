@@ -9,7 +9,6 @@ import {
     formatCurrency,
 } from "../shared/utils.js";
 import { COLORS, CHART_TYPES } from "../shared/constants.js";
-import { parse } from "path";
 
 document.addEventListener("DOMContentLoaded", () => {
     let form;
@@ -147,13 +146,153 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    const updateAsset = (id) => {};
+    const updateAsset = (id) => {
+        if (!form.isValid()) {
+            Toast.show("error", "Bitte überprüfe deine Engaben.");
+            return;
+        }
 
-    const deleteAssetEvent = (event) => {};
+        modal.setLoading(true);
+        HttpRequest.put(`/api/assets/${id}`, form.toObj(), {
+            onSuccess: (updatedAsset) => {
+                modal.setLoading(false);
 
-    const deleteAsset = (id) => {};
+                assets = assets.map((asset) => {
+                    if (asset.id == id) {
+                        return updatedAsset;
+                    }
+                    return asset;
+                });
 
-    const renderAssetRow = (revenue) => {};
+                const rowToUpdate = document.querySelector(
+                    `[data-parent-of="${id}"]`
+                );
+                rowToUpdate.replaceWith(renderAssetRow(updatedAsset));
+                renderAssetChart(chartType);
+                updateAssetTableFooter();
+
+                Toast.show("success", "Vermögens-Position wurde geändert");
+                modal.close();
+                form.reset();
+            },
+            onError: (error) => {
+                Toast.show("error", error.message);
+                modal.setLoading(false);
+            },
+        });
+    };
+
+    const deleteAssetEvent = (event) => {
+        let dataId =
+            event.target.getAttribute("data-id") ||
+            event.target.parentNode.getAttribute("data-id");
+
+        confirmModal.onSave = () => {
+            deleteAsset(dataId);
+        };
+        confirmModal.modal.querySelector("#asset-title").innerText =
+            assets.find((asset) => asset.id == dataId).name;
+        confirmModal.open();
+    };
+
+    const deleteAsset = (id) => {
+        confirmModal.setLoading(true);
+        HttpRequest.delete(`/api/assets/${id}`, {
+            onSuccess: (response) => {
+                confirmModal.setLoading(false);
+
+                const rowToDelete = document.querySelector(
+                    `[data-parent-of="${id}"]`
+                );
+                rowToDelete.remove();
+
+                confirmModal.close();
+                Toast.show("success", "Die Vermögens-Position wurde gelöscht");
+
+                assets = assets.filter((asset) => {
+                    return asset.id != id;
+                });
+
+                // if there are no more expenses, show the alert and hide main content
+                if (assets.length == 0) {
+                    document
+                        .getElementById("no-assets-alert")
+                        .classList.remove("hidden");
+                    document
+                        .getElementById("assets-container")
+                        .classList.add("hidden");
+
+                    return;
+                }
+
+                renderAssetsChart(chartType);
+
+                updateAssetTableFooter();
+            },
+            onError: (error) => {
+                confirmModal.setLoading(false);
+
+                Toast.show("error", error.message);
+            },
+        });
+    };
+
+    const renderAssetRow = (asset) => {
+        const row = elementFromString(`
+            <tr data-parent-of="${asset.id}" class="hover">
+                <th>
+                    ${asset.id}
+                </th>
+                <td>
+                    ${asset.name}
+                </td>
+                <td>
+                    ${formatCurrency(asset.value)}
+                </td>
+                <td
+                    class="flex justify-end"
+                >
+                    <div class="dropdown dropdown-bottom dropdown-end ml-auto">
+                        <label tabindex="0" class="btn btn-ghost btn-sm normal-case btn-square ">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="w-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"></path>
+                            </svg>
+                        </label>
+                        <ul tabindex="0" class="dropdown-content menu menu-compact  p-2 shadow bg-base-100 rounded-box w-52">
+                            <li
+                                class="update-asset-btn"
+                                data-id="${asset.id}"
+                            >
+                                <a>
+                                    bearbeiten
+                                </a>
+                            </li>
+                            <li
+                                class="delete-asset-btn"
+                                data-id="${asset.id}"
+                            >
+                                <a>
+                                    löschen
+                                </a>
+                            </li>
+                        </ul>
+                    </div> 
+                </td>
+            </tr>
+        `);
+
+        row.querySelector(".update-asset-btn").addEventListener(
+            "click",
+            updateAssetEvent
+        );
+
+        row.querySelector(".delete-asset-btn").addEventListener(
+            "click",
+            deleteAssetEvent
+        );
+
+        return row;
+    };
 
     const updateAssetsTableFooter = () => {
         const total = assets.reduce((acc, asset) => {

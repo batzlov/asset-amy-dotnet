@@ -56,7 +56,7 @@ export class Form {
                 continue;
             }
 
-            if (input.type === "checkbox") {
+            if (input.type === "checkbox" || input.type === "select") {
                 input.addEventListener("change", () => {
                     this.validate(input);
                 });

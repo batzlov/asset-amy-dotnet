@@ -29,4 +29,8 @@ export const assetSchema = {
         type: "number",
         rules: ["required", "number"],
     },
+    type: {
+        type: "string",
+        rules: [],
+    },
 };
