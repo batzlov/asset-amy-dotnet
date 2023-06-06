@@ -63,16 +63,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // initialize chart
         chartCanvas = document.getElementById("assets-chart");
-        renderAssetsChart(chartType);
+        renderAssetChart(chartType);
 
         const selectChartType = document.getElementById("select-chart-type");
         selectChartType.addEventListener("change", (event) => {
             chartType = event.target.value;
-            renderAssetsChart(chartType);
+            renderAssetChart(chartType);
         });
     };
 
-    const renderAssetsChart = (chartType) => {
+    const renderAssetChart = (chartType) => {
         if (chart) {
             chart.destroy();
         }
@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 form.reset();
                 Toast.show("success", "Asset-Position wurde erstellt");
 
-                renderAssetsChart(chartType);
+                renderAssetChart(chartType);
                 updateAssetsTableFooter();
             },
             onError: (error) => {
@@ -225,7 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-                renderAssetsChart(chartType);
+                renderAssetChart(chartType);
 
                 updateAssetTableFooter();
             },
