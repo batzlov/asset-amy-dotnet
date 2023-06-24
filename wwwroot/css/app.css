@@ -110,3 +110,10 @@ svg {
 .input-error ~ .label > span {
     display: block;
 }
+
+/*
+    error page styles
+*/
+.error-container {
+    height: calc(100vh - 56px);
+}
