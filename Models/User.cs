@@ -52,3 +52,9 @@ public class SignInUserDto
     [Required, MinLength(6), MaxLength(100)]
     public string password { get; set; }
 }
+
+public class PasswordForgottenDto 
+{
+    [Required, EmailAddress]
+    public string email { get; set; }
+}

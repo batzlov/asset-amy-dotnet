@@ -76,6 +76,19 @@ public class ApiAuthController : ControllerBase
         return Created("", new { token = CreateJwtToken(user) });
     }
 
+    [HttpPost]
+    [Route("api/password-forgotten")]
+    public IActionResult PasswordForgotten(PasswordForgottenDto dto)
+    {
+        var user = _userManager.GetByEmail(dto.email);
+
+        if(user != null) {
+            // TODO: send email with password reset link
+        }
+
+        return Ok();
+    }
+
     private void CreateCookie(User user) 
     {
         var claims = new List<Claim> {

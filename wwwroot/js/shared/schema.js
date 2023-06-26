@@ -1,4 +1,22 @@
-﻿export const expenseSchema = {
+﻿export const passwordForgottenSchema = {
+    email: {
+        type: "string",
+        rules: ["required", "email"],
+    },
+};
+
+export const passwordResetSchema = {
+    password: {
+        type: "string",
+        rules: ["required"],
+    },
+    confirmPassword: {
+        type: "string",
+        rules: ["required", "match:password"],
+    },
+};
+
+export const expenseSchema = {
     name: {
         type: "string",
         rules: ["required", "min:2"],

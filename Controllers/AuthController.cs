@@ -42,6 +42,18 @@ public class AuthController : Controller
         return RedirectToAction("Index", "Home");
     }
 
+    [Route("password-forgotten")]
+    public IActionResult PasswordForgotten()
+    {
+        return View();
+    }
+
+    [Route("password-reset")]
+    public IActionResult PasswordReset()
+    {
+        return View();
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
