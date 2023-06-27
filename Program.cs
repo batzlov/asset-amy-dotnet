@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Net.Http.Headers;
 using System;
 using System.Text;
+using SendGrid.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,6 +59,9 @@ builder.Services.AddAuthentication(options => {
         };
     });
 
+builder.Services.AddSendGrid(options => {
+    options.ApiKey = builder.Configuration.GetSection("EmailSettings:ApiKey").Value!;
+});
 
 var app = builder.Build();
 

@@ -11,6 +11,9 @@ using System.Text;
 // using BCrypt.Net;
 using asset_amy.Models;
 using asset_amy.Managers;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+
 namespace asset_amy.Controllers;
 
 [ApiController]
@@ -18,17 +21,20 @@ public class ApiAuthController : ControllerBase
 {
     private readonly ILogger<ApiAuthController> _logger;
     private readonly IConfiguration _configuration;
+    private readonly ISendGridClient _sendGridClient;
     private readonly UserManager _userManager;
 
     public ApiAuthController(
         ILogger<ApiAuthController> logger,
         IConfiguration configuration,
-        UserManager userManager
+        UserManager userManager,
+        ISendGridClient sendGridClient
     )
     {
         _logger = logger;
         _configuration = configuration;
         _userManager = userManager;
+        _sendGridClient = sendGridClient;
     }
 
     [HttpPost]
@@ -78,14 +84,26 @@ public class ApiAuthController : ControllerBase
 
     [HttpPost]
     [Route("api/password-forgotten")]
-    public IActionResult PasswordForgotten(PasswordForgottenDto dto)
+    public async Task<IActionResult> PasswordForgotten(PasswordForgottenDto dto)
     {
         var user = _userManager.GetByEmail(dto.email);
 
-        if(user != null) {
-            // TODO: send email with password reset link
-        }
+        if(user != null) {    
+            var fromMail = _configuration.GetSection("EmailSettings:FromMail").Value!;
+            var fromName = _configuration.GetSection("EmailSettings:FromName").Value!;
 
+            var msg = new SendGridMessage() {
+                From = new EmailAddress(fromMail, fromName),
+                Subject = "Passwort zurücksetzen",
+                PlainTextContent = "Passwort zurücksetzen",
+                HtmlContent = PasswordForgottenMailTemplate(user.firstName, "http://localhost:5120/password-forgotten/" + user.id)
+            };
+
+            msg.AddTo(dto.email);
+
+            await _sendGridClient.SendEmailAsync(msg);
+        }
+        
         return Ok();
     }
 
@@ -137,4 +155,17 @@ public class ApiAuthController : ControllerBase
 
         return jwt;
     }
+
+    private string PasswordForgottenMailTemplate(string userName, string resetLink) {
+        return @"
+            <html>
+                <body>
+                    <p>Hallo {{userName}},</p>
+                    <p>hier ist dein Link zum Zurücksetzen deines Passworts: <a href='{{resetLink}}'>klick mich</a></p>
+                    <p>Wenn du dein Passwort nicht zurücksetzen möchtest, bzw. diese E-Mail auch nicht angefordert hast, bitten wir dich mit dem Support Kontakt aufzunehmen.</p>
+                    <p>Dein Asset Amy-Team</p>
+                </body>
+            </html>
+        ".Replace("{{userName}}", userName).Replace("{{resetLink}}", resetLink);
+    } 
 }
