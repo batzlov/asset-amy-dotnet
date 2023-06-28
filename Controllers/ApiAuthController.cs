@@ -82,13 +82,16 @@ public class ApiAuthController : ControllerBase
         return Created("", new { token = CreateJwtToken(user) });
     }
 
-    [HttpPost]
+    [HttpPut]
     [Route("api/password-forgotten")]
     public async Task<IActionResult> PasswordForgotten(PasswordForgottenDto dto)
     {
         var user = _userManager.GetByEmail(dto.email);
 
-        if(user != null) {    
+        if(user != null) {   
+            user.passwordResetHash = Guid.NewGuid().ToString();
+            _userManager.Update(user);
+
             var fromMail = _configuration.GetSection("EmailSettings:FromMail").Value!;
             var fromName = _configuration.GetSection("EmailSettings:FromName").Value!;
 
@@ -96,7 +99,7 @@ public class ApiAuthController : ControllerBase
                 From = new EmailAddress(fromMail, fromName),
                 Subject = "Passwort zurücksetzen",
                 PlainTextContent = "Passwort zurücksetzen",
-                HtmlContent = PasswordForgottenMailTemplate(user.firstName, "http://localhost:5120/password-forgotten/" + user.id)
+                HtmlContent = PasswordForgottenMailTemplate(user.firstName, "http://localhost:5220/password-reset/" + user.passwordResetHash)
             };
 
             msg.AddTo(dto.email);
@@ -104,6 +107,23 @@ public class ApiAuthController : ControllerBase
             await _sendGridClient.SendEmailAsync(msg);
         }
         
+        return Ok(new { ok = true });
+    }
+
+    [HttpPut]
+    [Route("api/password-reset/{passwordResetHash}")]
+    public IActionResult PasswordReset(string passwordResetHash, PasswordResetDto dto)
+    {
+        var user = _userManager.GetByPasswordResetHash(passwordResetHash);
+
+        if(user == null) {
+            return BadRequest(new { ok = false, message = "Etwas scheint schief gelaufen zu sein." });
+        }
+
+        user.password = BCrypt.Net.BCrypt.HashPassword(dto.password);
+        user.passwordResetHash = null;
+        _userManager.Update(user);
+
         return Ok();
     }
 

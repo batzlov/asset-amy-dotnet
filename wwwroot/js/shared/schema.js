@@ -8,11 +8,11 @@
 export const passwordResetSchema = {
     password: {
         type: "string",
-        rules: ["required"],
+        rules: ["required", "min:6"],
     },
     confirmPassword: {
         type: "string",
-        rules: ["required", "match:password"],
+        rules: ["required", "min:6", "match:password"],
     },
 };
 

@@ -48,9 +48,18 @@ public class AuthController : Controller
         return View();
     }
 
-    [Route("password-reset")]
-    public IActionResult PasswordReset()
+    [Route("password-reset/{passwordResetHash}")]
+    public IActionResult PasswordReset(string passwordResetHash)
     {
+        var user = _userManager.GetByPasswordResetHash(passwordResetHash);
+
+        ViewBag.passwordResetHash = passwordResetHash;
+
+        if (user == null)
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
         return View();
     }
 

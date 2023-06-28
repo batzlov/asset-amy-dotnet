@@ -21,10 +21,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 currentlyLoading = true;
                 submit.classList.add("loading");
 
-                HttpRequest.post("/api/password-forgotten", form.toObj(), {
+                HttpRequest.put("/api/password-forgotten", form.toObj(), {
                     onSuccess: (response) => {
                         currentlyLoading = false;
                         submit.classList.remove("loading");
+                        form.reset();
 
                         Toast.show(
                             "success",

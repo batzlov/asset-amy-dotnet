@@ -62,3 +62,12 @@ public class PasswordForgottenDto
     [Required, EmailAddress]
     public string email { get; set; }
 }
+
+public class PasswordResetDto 
+{
+    [Required, MinLength(6), MaxLength(200)]
+    public string password { get; set; }
+
+    [Required, MinLength(6), MaxLength(200)]
+    public string confirmPassword { get; set; }
+}

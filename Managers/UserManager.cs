@@ -18,9 +18,20 @@ namespace asset_amy.Managers
 			container.SaveChanges();
 		}
 
+		public void Update(User user)
+		{
+			container.users.Update(user);
+			container.SaveChanges();
+		}
+
 		public User? GetByEmail(string email)
 		{
 			return container.users.FirstOrDefault(u => u.email == email);
+		}
+
+		public User? GetByPasswordResetHash(string hash)
+		{
+			return container.users.FirstOrDefault(u => u.passwordResetHash == hash);
 		}
 
         private AssetAmyContext container { get; set; }
