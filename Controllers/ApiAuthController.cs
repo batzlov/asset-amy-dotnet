@@ -95,11 +95,18 @@ public class ApiAuthController : ControllerBase
             var fromMail = _configuration.GetSection("EmailSettings:FromMail").Value!;
             var fromName = _configuration.GetSection("EmailSettings:FromName").Value!;
 
+            var passwordResetLink = $"{_configuration.GetSection("AppSettings:ClientUrl").Value}/password-reset/{user.passwordResetHash}";
+
+            var emailTemplate = System.IO.File.ReadAllText("wwwroot/mails/reset-password.html");
+            emailTemplate = emailTemplate
+                .Replace("{{firstName}}", user.firstName)
+                .Replace("{{passwordResetLink}}", passwordResetLink);
+
             var msg = new SendGridMessage() {
                 From = new EmailAddress(fromMail, fromName),
                 Subject = "Passwort zurücksetzen",
                 PlainTextContent = "Passwort zurücksetzen",
-                HtmlContent = PasswordForgottenMailTemplate(user.firstName, "http://localhost:5220/password-reset/" + user.passwordResetHash)
+                HtmlContent = emailTemplate,
             };
 
             msg.AddTo(dto.email);
@@ -124,7 +131,7 @@ public class ApiAuthController : ControllerBase
         user.passwordResetHash = null;
         _userManager.Update(user);
 
-        return Ok();
+        return Ok(new {});
     }
 
     private void CreateCookie(User user) 
@@ -187,5 +194,5 @@ public class ApiAuthController : ControllerBase
                 </body>
             </html>
         ".Replace("{{userName}}", userName).Replace("{{resetLink}}", resetLink);
-    } 
+    }
 }
