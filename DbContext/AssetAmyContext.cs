@@ -173,6 +173,12 @@ public partial class AssetAmyContext : EF.DbContext
                 .HasDefaultValueSql("'USER'")
                 .HasColumnType("enum('USER','ADMIN')")
                 .HasColumnName("role");
+            entity.Property(e => e.activationHash)
+                .HasMaxLength(1000)
+                .HasColumnName("activationHash");
+            entity.Property(e => e.passwordResetHash)
+                .HasMaxLength(1000)
+                .HasColumnName("passwordResetHash");
             entity.Property(e => e.updatedAt)
                 .HasColumnType("datetime(3)")
                 .HasColumnName("updatedAt");

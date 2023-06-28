@@ -8,18 +8,20 @@ datasource db {
 }
 
 model User {
-    id              Int      @id @default(autoincrement())
-    firstName       String   @db.VarChar(100)
-    lastName        String   @db.VarChar(100)
-    email           String   @unique
-    password        String   
-    role            Role     @default(USER)
-    createdAt       DateTime @default(now())
-    updatedAt       DateTime @updatedAt
+    id                  Int      @id @default(autoincrement())
+    firstName           String   @db.VarChar(100)
+    lastName            String   @db.VarChar(100)
+    email               String   @unique
+    password            String   
+    role                Role     @default(USER)
+    activationHash      String?  @db.VarChar(1000)
+    passwordResetHash   String?  @db.VarChar(1000)
+    createdAt           DateTime @default(now())
+    updatedAt           DateTime @updatedAt
 
-    revenues        Revenue[]
-    expenses        Expense[]
-    assets          Asset[]
+    revenues            Revenue[]
+    expenses            Expense[]
+    assets              Asset[]
 }
 
 model Revenue {

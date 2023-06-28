@@ -18,6 +18,10 @@ public partial class User
 
     public string role { get; set; } = null!;
 
+    public string? activationHash { get; set; }
+
+    public string? passwordResetHash { get; set; }
+
     public DateTime createdAt { get; set; }
 
     public DateTime updatedAt { get; set; }
