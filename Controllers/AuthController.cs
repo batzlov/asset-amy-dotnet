@@ -63,6 +63,22 @@ public class AuthController : Controller
         return View();
     }
 
+    [Route("verify-email/{activationHash}")]
+    public IActionResult VerifyEmail(string activationHash)
+    {
+        var user = _userManager.GetByActivationHash(activationHash);
+
+        if (user == null)
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
+        user.activationHash = null;
+        _userManager.Update(user);
+
+        return View();
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

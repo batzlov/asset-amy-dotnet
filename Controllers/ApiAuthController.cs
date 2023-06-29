@@ -39,7 +39,7 @@ public class ApiAuthController : ControllerBase
 
     [HttpPost]
     [Route("api/sign-up")]
-    public IActionResult SignUp(SignUpUserDto dto)
+    public async Task<IActionResult> SignUp(SignUpUserDto dto)
     {
         if(!ModelState.IsValid) {
             return BadRequest(new { ok = false, message = "Deine Angaben sind fehlerhaft." });
@@ -57,8 +57,30 @@ public class ApiAuthController : ControllerBase
         user.lastName = dto.lastName;
         user.email = dto.email;
         user.password = BCrypt.Net.BCrypt.HashPassword(dto.password);
+        user.activationHash = Guid.NewGuid().ToString();
 
         _userManager.Add(user);
+
+        var fromMail = _configuration.GetSection("EmailSettings:FromMail").Value!;
+        var fromName = _configuration.GetSection("EmailSettings:FromName").Value!;
+
+        var activationLink = $"{_configuration.GetSection("AppSettings:ClientUrl").Value}/verify-email/{user.activationHash}";
+
+        var emailTemplate = System.IO.File.ReadAllText("wwwroot/mails/verify-email.html");
+        emailTemplate = emailTemplate
+            .Replace("{{firstName}}", user.firstName)
+            .Replace("{{activationLink}}", activationLink);
+
+        var msg = new SendGridMessage() {
+            From = new EmailAddress(fromMail, fromName),
+            Subject = "E-Mail bestätigen",
+            PlainTextContent = "E-Mail bestätigen",
+            HtmlContent = emailTemplate,
+        };
+
+        msg.AddTo(dto.email);
+
+        await _sendGridClient.SendEmailAsync(msg);
 
         return Ok(user);
     }
@@ -72,7 +94,7 @@ public class ApiAuthController : ControllerBase
             return Unauthorized(new { ok = false, message = "Deine Anmeldedaten scheinen nicht korrekt zu sein." });
         }
 
-        if(!BCrypt.Net.BCrypt.Verify(dto.password, user.password))
+        if(!BCrypt.Net.BCrypt.Verify(dto.password, user.password) || user.activationHash != null)
         {
             return Unauthorized(new { ok = false, message = "Deine Anmeldedaten scheinen nicht korrekt zu sein." });
         }

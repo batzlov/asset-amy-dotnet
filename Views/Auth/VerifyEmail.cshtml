@@ -1,0 +1,25 @@
+@{
+    Layout = "Layouts/_AuthLayout";
+    ViewData["Title"] = "E-Mail bestätigen";
+}
+
+<div class="auth-layout-container flex flex-column justify-center items-center w-100 px-10 xl:px-30">
+    <div class="card w-full max-w-2xl bg-base-100 shadow-xl">
+        <div class="card-body">
+            <h2 class="card-title text-2xl">
+                Deine E-Mail ist bestätigt!
+            </h2>
+            <p>
+                Du kannst dich jetzt mit deinem Account 
+                <a
+                    class="link link-hover"
+                    asp-controller="Auth"
+                    asp-action="SignIn"
+                >
+                    anmelden
+                </a> 
+                und deine Finanzen aufs nächste Level bringen.
+            </p>
+        </div>
+    </div>
+</div>

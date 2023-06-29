@@ -34,6 +34,11 @@ namespace asset_amy.Managers
 			return container.users.FirstOrDefault(u => u.passwordResetHash == hash);
 		}
 
+		public User? GetByActivationHash(string hash)
+		{
+			return container.users.FirstOrDefault(u => u.activationHash == hash);
+		}
+
         private AssetAmyContext container { get; set; }
     }
 }
