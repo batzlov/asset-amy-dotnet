@@ -16,6 +16,10 @@ Immobilien oder Anleihen unterteilen und so ihre Asset Allocation darstellen.
 
 Insgesamt soll "Asset Amy" verschiedene Funktionen zur Verwaltung von Einnahmen, Ausgaben und Vermögen bieten.
 
+## Screenshots der Anwendung
+
+coming soon..
+
 ### Funktionallitäten (ursprünglich)
 
 1. Hinzufügen, bearbeiten und löschen von Einnahmen
@@ -195,4 +199,125 @@ Erstellen der Models unter Ausschluss der Migration-Tabelle
     dotnet ef dbcontext scaffold "Server=localhost;Port=8889;Database=asset-amy-dotnet;User Id=root;Password=root"
     Pomelo.EntityFrameworkCore.MySql --context-dir DbContext --context AssetAmyContext
     --output-dir Models --force --table User --table Asset --table Expense --table Revenue
+```
+
+### Validierung von Formularen (Frontend)
+
+Für Validierung von Formularen im Frontend wurde eine einfache, gut nutzbare Bibliothek selbst implementiert. Wie diese Bibliothek funktioniert und genutzt werden kann wird im folgenden grob beschrieben.
+
+```js
+class Form {
+    init() {
+        // initialize all needed functionality
+    }
+
+    validate() {
+        // validate input and check all rules
+    }
+
+    validateAll() {
+        // call validate for every single input
+    }
+
+    isValid() {
+        // returns true when form is valid and false when not
+    }
+
+    markAsInvalid(inputNames = []) {
+        // mark inputs as invalid
+    }
+
+    patchValues(obj) {
+        // patch values to form
+    }
+
+    reset() {
+        // call form reset method
+    }
+
+    toObj() {
+        // return form values as object
+    }
+}
+```
+
+Nachfolgend wird kurz beschrieben wie die Bibliothek genutzt werden kann. Die Validierungs-Regeln werden über ein Schema definiert. Hier ein Beispiel:
+
+```js
+    const schema = {
+        inputName: {
+            type: "number" | "string" | "boolean",
+            rules: [
+                "required", "requiredCheckboxTrue", "email",
+                "number", "min:2", "max:10", "match:inputName",
+                "pattern:regex"
+            ],
+        },
+        ...
+    };
+
+    const userSchema = {
+        firstName: {
+            type: "string",
+            rules: ["required", "min:2", "max:10"],
+        },
+        lastName: {
+            type: "string",
+            rules: ["required"],
+        },
+        email: {
+            type: "string",
+            rules: ["required", "email"],
+        },
+        password: {
+            type: "string",
+            rules: ["required"],
+        },
+        confirmPassword: {
+            type: "string",
+            rules: ["required", "match:password"],
+        },
+        privacyPolicyAccepted: {
+            type: "boolean",
+            rules: ["requiredCheckboxTrue"],
+        },
+    };
+```
+
+Wichtig für die Erstellung des html ist es, das die Input-Elemente einen Namen haben, der dem Namen im Schema entspricht.
+So würde das passende html-Gerüst aussehen:
+
+```html
+<form>
+    <div>
+        <label>
+            <span> Was ist dein Vorname? </span>
+        </label>
+        <input type="text" name="firstName" placeholder="Vorname" />
+        <label>
+            <span> Bitte überprüfe deine Eingabe für dieses Feld </span>
+        </label>
+    </div>
+</form>
+```
+
+Und so würde die Nutzung in der Programmierung aussehen:
+
+```js
+import { Form } from "./form.js";
+
+const formElm = document.querySelector("form");
+const form = new Form(formElm, userSchema);
+
+const submit = document.querySelector("button");
+submit.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (form.isValid()) {
+        // send ajax request to the backend
+    } else {
+        // display errors
+    }
+});
 ```
