@@ -30,7 +30,7 @@
 
     const initCountdown = () => {
         let now = new Date();
-        let release = new Date("2023-07-11");
+        let release = new Date("2023-07-31");
 
         const counterDays = document.querySelector(".counter-days");
         const counterHours = document.querySelector(".counter-hours");
