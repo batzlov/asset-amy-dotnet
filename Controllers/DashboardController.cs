@@ -5,6 +5,8 @@ using System.Security.Claims;
 using asset_amy.Models;
 using asset_amy.Managers;
 using Newtonsoft.Json;
+using ClosedXML;
+using ClosedXML.Excel;
 
 namespace asset_amy.Controllers;
 
@@ -47,6 +49,56 @@ public class DashboardController : Controller
         ViewBag.assetsJson = JsonConvert.SerializeObject(assets);
 
         return View();
+    }
+
+    [Route("dashboard/get-summary-spreadsheet")]
+    public IActionResult GetSummarySpreadsheet() 
+    {
+        var userId = getCurrentUserId();
+
+        // get data we need to export
+        var expenses = _expenseManager.GetAllForUser(userId);
+        var revenues = _revenueManager.GetAllForUser(userId);
+        var assets = _assetManager.GetAllForUser(userId);
+
+        // convert the data so its easy readable for the user
+        var expenseTable = expenses.Select(e => new {
+            Name = e.name,
+            Beschreibung = e.description,
+            Wert = e.value
+        }).ToList();
+
+        var revenueTable = revenues.Select(r => new {
+            Name = r.name,
+            Beschreibung = r.description,
+            Wert = r.value
+        }).ToList();
+
+        var assetTable = assets.Select(a => new {
+            Name = a.name,
+            Beschreibung = a.description,
+            Wert = a.value,
+            Kateogrie = a.type
+        }).ToList();
+
+        string fileName = "asset-amy-summary.xlsx";
+
+        IXLWorkbook workbook = new XLWorkbook();
+
+        workbook.AddWorksheet("Ausgaben").FirstCell().InsertTable(expenseTable, false);
+        workbook.AddWorksheet("Einnahmen").FirstCell().InsertTable(revenueTable, false);
+        workbook.AddWorksheet("Assets").FirstCell().InsertTable(assetTable, false);
+
+        // return file
+        var stream = new System.IO.MemoryStream();
+        workbook.SaveAs(stream);
+        var content = stream.ToArray();
+
+        return File(
+            content,
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            fileName
+        );
     }
 
     [Route("dashboard/expenses")]
