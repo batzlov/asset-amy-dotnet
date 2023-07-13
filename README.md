@@ -16,6 +16,39 @@ Immobilien oder Anleihen unterteilen und so ihre Asset Allocation darstellen.
 
 Insgesamt soll "Asset Amy" verschiedene Funktionen zur Verwaltung von Einnahmen, Ausgaben und Vermögen bieten.
 
+## Installation und Ausführung
+
+Folgenden Befehl ausführen um die Konfigurationsdatei zu erstellen:
+
+```bash
+    cp appsettings.example.json appsettings.json
+```
+
+Um das Projekt erfolgreich zu starten muss zuerst eine mysql-Datenbank angelegt werden.
+Die Daten für den Zugang zur Datenbank müssen entsprechend in der `appsettings.json` eingetragen werden.
+
+Um die Datenbank zu initialisieren und Testdaten zu importieren muss folgender Befehl ausgeführt werden auf Windows:
+
+```bash
+    dotnet-ef database update
+```
+
+bzw. auf Mac/Linux:
+
+```bash
+    dotnet ef database update
+```
+
+Anschließend kann das Projekt mit folgendem Befehl gestartet werden:
+
+```bash
+    dotnet watch
+```
+
+### Anmerkungen E-Mail Versand
+
+Soll der E-Mail Versand aktiviert werden, muss in der `appsettings.json` ein passender Sendgrid-Api-Key eingetragen werden.
+
 ## Screenshots der Anwendung
 
 coming soon..
@@ -40,7 +73,7 @@ coming soon..
 4. Übersicht über Ausgaben mit Hilfe verschiedener Statistiken
 5. Hinzufügen, bearbeiten und löschen von Assets
 6. Übersicht über Assets mit Hilfe verschiedener Statistiken
-7. Export der Daten für verschiedene Systeme ermöglichen, so z.B. Excel
+7. Export der Daten für verschiedene Systeme ermöglichen, mittels z.B. Excel
 
 ### Projektstruktur
 
