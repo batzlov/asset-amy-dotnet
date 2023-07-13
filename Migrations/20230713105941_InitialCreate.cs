@@ -36,7 +36,7 @@ namespace asset_amy.Migrations
                     passwordResetHash = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: true, collation: "utf8mb4_unicode_ci")
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     createdAt = table.Column<DateTime>(type: "datetime(3)", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP(3)"),
-                    updatedAt = table.Column<DateTime>(type: "datetime(3)", nullable: true)
+                    updatedAt = table.Column<DateTime>(type: "datetime(3)", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP(3)")
                 },
                 constraints: table =>
                 {
@@ -59,7 +59,7 @@ namespace asset_amy.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     value = table.Column<double>(type: "double", nullable: false),
                     createdAt = table.Column<DateTime>(type: "datetime(3)", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP(3)"),
-                    updatedAt = table.Column<DateTime>(type: "datetime(3)", nullable: true),
+                    updatedAt = table.Column<DateTime>(type: "datetime(3)", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP(3)"),
                     belongsToId = table.Column<int>(type: "int(11)", nullable: false)
                 },
                 constraints: table =>
@@ -86,7 +86,7 @@ namespace asset_amy.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     value = table.Column<double>(type: "double", nullable: false),
                     createdAt = table.Column<DateTime>(type: "datetime(3)", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP(3)"),
-                    updatedAt = table.Column<DateTime>(type: "datetime(3)", nullable: true),
+                    updatedAt = table.Column<DateTime>(type: "datetime(3)", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP(3)"),
                     belongsToId = table.Column<int>(type: "int(11)", nullable: false)
                 },
                 constraints: table =>
@@ -113,7 +113,7 @@ namespace asset_amy.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     value = table.Column<double>(type: "double", nullable: false),
                     createdAt = table.Column<DateTime>(type: "datetime(3)", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP(3)"),
-                    updatedAt = table.Column<DateTime>(type: "datetime(3)", nullable: true),
+                    updatedAt = table.Column<DateTime>(type: "datetime(3)", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP(3)"),
                     belongsToId = table.Column<int>(type: "int(11)", nullable: false)
                 },
                 constraints: table =>

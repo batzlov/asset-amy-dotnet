@@ -71,6 +71,7 @@ public partial class AssetAmyContext : EF.DbContext
                 .HasColumnType("enum('P2P','STOCK','BOND','CRYPTO','REAL_ESTATE','COMMODITY','CASH')")
                 .HasColumnName("type");
             entity.Property(e => e.updatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP(3)")
                 .HasColumnType("datetime(3)")
                 .HasColumnName("updatedAt");
             entity.Property(e => e.value).HasColumnName("value");
@@ -106,6 +107,7 @@ public partial class AssetAmyContext : EF.DbContext
                 .HasMaxLength(100)
                 .HasColumnName("name");
             entity.Property(e => e.updatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP(3)")
                 .HasColumnType("datetime(3)")
                 .HasColumnName("updatedAt");
             entity.Property(e => e.value).HasColumnName("value");
@@ -141,6 +143,7 @@ public partial class AssetAmyContext : EF.DbContext
                 .HasMaxLength(100)
                 .HasColumnName("name");
             entity.Property(e => e.updatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP(3)")
                 .HasColumnType("datetime(3)")
                 .HasColumnName("updatedAt");
             entity.Property(e => e.value).HasColumnName("value");
@@ -189,6 +192,7 @@ public partial class AssetAmyContext : EF.DbContext
                 .HasMaxLength(1000)
                 .HasColumnName("passwordResetHash");
             entity.Property(e => e.updatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP(3)")
                 .HasColumnType("datetime(3)")
                 .HasColumnName("updatedAt");
         });
