@@ -23,7 +23,7 @@ export const expenseSchema = {
     },
     value: {
         type: "number",
-        rules: ["required", "number"],
+        rules: ["required", "number", "positiveNumber"],
     },
 };
 
@@ -34,7 +34,7 @@ export const revenueSchema = {
     },
     value: {
         type: "number",
-        rules: ["required", "number"],
+        rules: ["required", "number", "positiveNumber"],
     },
 };
 
@@ -45,7 +45,7 @@ export const assetSchema = {
     },
     value: {
         type: "number",
-        rules: ["required", "number"],
+        rules: ["required", "number", "positiveNumber"],
     },
     type: {
         type: "string",

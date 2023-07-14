@@ -125,8 +125,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 form.reset();
                 Toast.show("success", "Einnahme wurde erstellt");
 
-                renderRevenueChart(chartType);
-                updateRevenueTableFooter();
+                renderRevenuesChart(chartType);
+                updateRevenuesTableFooter();
             },
             onError: (error) => {
                 Toast.show("error", error.message);

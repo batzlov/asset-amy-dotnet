@@ -20,6 +20,13 @@ export class Form {
 
                 return !isNaN(value) && !isNaN(parseFloat(value));
             },
+            positiveNumber: (input, value) => {
+                if (typeof value != "string") {
+                    return false;
+                }
+
+                return !isNaN(value) && !isNaN(parseFloat(value)) && value >= 0;
+            },
             min: (input, value, min) => {
                 return value.length >= min;
             },
