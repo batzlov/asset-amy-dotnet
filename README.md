@@ -45,6 +45,15 @@ Anschließend kann das Projekt mit folgendem Befehl gestartet werden:
     dotnet watch
 ```
 
+## Test-Account
+
+Zum Testen der Anwendung kann folgender Account verwendet werden:
+
+```
+    E-Mail: robert.ackermann@fh-erfurt.de
+    Passwort: password
+```
+
 ### Anmerkungen
 
 Nach der erfolgreichen Registrierung müssen Nutzer:innen zuerst ihre E-Mail Adresse verifizieren, bevor sie sich anmelden können.
