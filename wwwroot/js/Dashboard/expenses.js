@@ -303,7 +303,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 0);
 
         const totalElement = document.querySelector(".expenses-total");
-        totalElement.innerHTML = total;
+        totalElement.innerHTML = formatCurrency(Number(total.toFixed(2)));
     };
 
     init();
