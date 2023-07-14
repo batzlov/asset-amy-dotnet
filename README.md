@@ -45,13 +45,22 @@ Anschließend kann das Projekt mit folgendem Befehl gestartet werden:
     dotnet watch
 ```
 
+### Anmerkungen
+
+Nach der erfolgreichen Registrierung müssen Nutzer:innen zuerst ihre E-Mail Adresse verifizieren, bevor sie sich anmelden können.
+
 ### Anmerkungen E-Mail Versand
 
 Soll der E-Mail Versand aktiviert werden, muss in der `appsettings.json` ein passender Sendgrid-Api-Key eingetragen werden.
 
 ## Screenshots der Anwendung
 
-coming soon..
+![Landing Page](./docs/screenshots/landing-page.png)
+![Screenshot 1](./docs/screenshots/aa-screenshot-1.png)
+![Screenshot 2](./docs/screenshots/aa-screenshot-2.png)
+![Screenshot 3](./docs/screenshots/aa-screenshot-3.png)
+![Screenshot 4](./docs/screenshots/aa-screenshot-4.png)
+![Screenshot 5](./docs/screenshots/aa-screenshot-5.png)
 
 ### Funktionallitäten (ursprünglich)
 
