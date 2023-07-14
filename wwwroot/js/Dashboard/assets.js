@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
                 rowToUpdate.replaceWith(renderAssetRow(updatedAsset));
                 renderAssetChart(chartType);
-                updateAssetTableFooter();
+                updateAssetsTableFooter();
 
                 Toast.show("success", "Vermögens-Position wurde geändert");
                 modal.close();
@@ -227,7 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 renderAssetChart(chartType);
 
-                updateAssetTableFooter();
+                updateAssetsTableFooter();
             },
             onError: (error) => {
                 confirmModal.setLoading(false);
